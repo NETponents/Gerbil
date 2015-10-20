@@ -21,6 +21,35 @@ namespace Gerbil
         Console.WriteLine("ERROR: AI temp storage folder not found, please reinstall Gerbil to fix.");
         Application.Exit();
       }
+      //TODO: initialize settings file
+      while(true)
+      {
+        Console.Write("Gerbil> ");
+        string input = "";
+        input = Console.readLine();
+        switch(input.split(" ")[0])
+        {
+          case "exit":
+            Application.Exit();
+            break;
+          case "config":
+            //TODO: forward config command
+            break;
+          case "start":
+            startAttack()
+            break;
+          default:
+            Console.WriteLine("ERROR: Command not found.");
+            break;
+        }
+      }
+    }
+    private static void startAttack()
+    {
+      Console.Write("Enter target IP address: ");
+      string target = "";
+      target = Console.readLine();
+      //TODO: Convert target to IPAddress
     }
   }
 }
