@@ -12,7 +12,12 @@ namespace Gerbil
     }
     public int loadConfig(string filepath)
     {
-      
+      string[] lines = System.IO.File.ReadAllLines(filepath);
+      foreach(string line in lines)
+      {
+        string[] args = line.split("=");
+        this.storeField(args[0], args[1]);
+      }
     }
     private void storeField(string id, string value)
     {
@@ -20,7 +25,11 @@ namespace Gerbil
     }
     public string getField(string id)
     {
-      return configStore.Get(id);
+      if(configStore.ContainsKey(id))
+      {
+        return configStore.Get(id);
+      }
+      return "default";
     }
   }
 }
