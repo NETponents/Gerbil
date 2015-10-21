@@ -1,6 +1,7 @@
 using System;
 using System.IO;
 using System.IO.File;
+using System.Net.Ports;
 
 namespace Gerbil
 {
@@ -47,9 +48,17 @@ namespace Gerbil
     private static void startAttack()
     {
       Console.Write("Enter target IP address: ");
-      string target = "";
-      target = Console.readLine();
-      //TODO: Convert target to IPAddress
+      string target = Console.readLine();
+      Console.Write("\nEnter start port: ");
+      int sPort = Convert.toInt(Console.readLine());
+      Console.Write("\nEnter end port: ");
+      int ePort = Convert.toInt(Console.readLine());
+      //TODO: Verify input string
+      int[] openPorts = Gerbil_Scanners.portScanner.scan(target, sPort, ePort);
+      for(int i = 0; i < openPorts.count; i++)
+      {
+        Console.WriteLine(openPorts[i]);
+      }
     }
   }
 }
