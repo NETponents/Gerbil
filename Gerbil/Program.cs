@@ -12,13 +12,14 @@ namespace Gerbil
             Console.WriteLine("Copyright 2015 under the GPL V3 License");
             Console.WriteLine("NETponents or its authors assume no responsibility for this program or its actions.");
             Console.WriteLine("Starting up...");
-            if (Directory.Exists(@"C:\\Gerbil"))
+            if (Directory.Exists(Path.Combine(Environment.ExpandEnvironmentVariables("%userprofile%"), "Documents", "Gerbil")))
             {
                 Console.WriteLine("Found AI temp storage folder.");
             }
             else
             {
-                Directory.CreateDirectory(@"C:\\Gerbil\AI\memstore\ports\services");
+                Directory.CreateDirectory(Path.Combine(Environment.ExpandEnvironmentVariables("%userprofile%"), "Documents", "Gerbil", "memstore", "ports", "services"));
+                Gerbil_PortServices.PortLookup.initServices();
             }
             //TODO: initialize settings file
             while (true)
@@ -33,6 +34,9 @@ namespace Gerbil
                         break;
                     case "config":
                         //TODO: forward config command
+                        break;
+                    case "portservice":
+                        Gerbil_PortServices.PortLookup.launch(input.Split(' '));
                         break;
                     case "start":
                         startAttack();
@@ -78,7 +82,7 @@ namespace Gerbil
             }
             else
             {
-                Console.WriteLine("No known services found in AI store. Enter training mode or add them manually through the CLI.");
+                Console.WriteLine("No known services found in AI store. Add them manually using 'portservice add serviceName portNumber'");
             }
         }
     }
