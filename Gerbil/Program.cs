@@ -12,14 +12,13 @@ namespace Gerbil
             Console.WriteLine("Copyright 2015 under the GPL V3 License");
             Console.WriteLine("NETponents or its authors assume no responsibility for this program or its actions.");
             Console.WriteLine("Starting up...");
-            if (Directory.Exists("./store"))
+            if (Directory.Exists(@"C:\\Gerbil"))
             {
                 Console.WriteLine("Found AI temp storage folder.");
             }
             else
             {
-                Console.WriteLine("ERROR: AI temp storage folder not found, please reinstall Gerbil to fix.");
-                //Application.Exit();
+                Directory.CreateDirectory(@"C:\\Gerbil\AI\memstore\ports\services");
             }
             //TODO: initialize settings file
             while (true)
@@ -30,7 +29,7 @@ namespace Gerbil
                 switch (input.Split(' ')[0])
                 {
                     case "exit":
-
+                        Environment.Exit(0);
                         break;
                     case "config":
                         //TODO: forward config command
@@ -48,27 +47,38 @@ namespace Gerbil
         {
             Console.Write("Enter target IP address: ");
             string target = Console.ReadLine();
-            Console.Write("\nEnter start port: ");
+            Console.Write("Enter start port: ");
             int sPort = Convert.ToInt32(Console.ReadLine());
-            Console.Write("\nEnter end port: ");
+            Console.Write("Enter end port: ");
             int ePort = Convert.ToInt32(Console.ReadLine());
             //TODO: Verify input string
-            //int[] openPorts = Gerbil_Scanners.PortScanner.scan(target, sPort, ePort);
-            //for (int i = 0; i < openPorts.Length; i++)
-            //{
-            //    Console.WriteLine(openPorts[i]);
-            //}
-            for(int i = sPort; i <= ePort; i++)
+            Console.WriteLine("Probing ports...");
+            int[] openPorts = Gerbil_Scanners.PortScanner.scan(target, sPort, ePort);
+            if (openPorts.Length > 0)
             {
-                Console.Write(i + ": ");
-                if(Gerbil_Scanners.PortScanner.isOpen(target, i))
+                Console.WriteLine("Open ports:");
+                for (int i = 0; i < openPorts.Length; i++)
                 {
-                    Console.WriteLine("open");
+                    Console.WriteLine(openPorts[i]);
                 }
-                else
+            }
+            else
+            {
+                Console.WriteLine("No open ports found for the specified host and port range.");
+            }
+            Console.WriteLine("Looking up port definitions...");
+            string[] openServices = Gerbil_PortServices.PortLookup.getServices(openPorts);
+            if (openServices.Length > 0)
+            {
+                Console.WriteLine("Known services:");
+                foreach (string i in openServices)
                 {
-                    Console.WriteLine("closed");
+                    Console.WriteLine(i);
                 }
+            }
+            else
+            {
+                Console.WriteLine("No known services found in AI store. Enter training mode or add them manually through the CLI.");
             }
         }
     }
