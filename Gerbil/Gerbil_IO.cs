@@ -53,6 +53,12 @@ namespace Gerbil
             int store = Console.readLine();
             return store;
           }
+          public static string prompt(string prompt)
+          {
+              Out.write(prompt + ": ");
+              string store = Console.readLine();
+              return store;
+          }
         }
     }
 }
