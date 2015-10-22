@@ -13,53 +13,47 @@ namespace Gerbil
         {
             public static void writeln(string input)
             {
-              Console.WriteLine(input);
+                write(input + "\n");
             }
             public static void write(string input)
             {
-              Console.Write(input);
+                Console.Write(input);
             }
             public static void blank()
             {
-              Console.Write("\n");
+                Console.Write("\n");
             }
             public static void blank(int iterations)
             {
-              for(int i = 0; i < iterations; i++)
-              {
-                blank();
-              }
+                for (int i = 0; i < iterations; i++)
+                {
+                    blank();
+                }
             }
-            private static void printMenu(string title, params string[] options)
+            public static void printMenu(string title, params string[] options)
             {
-              writeln(title);
-              for(int i = 0; i < options.Length; i++)
-              {
-                writeln(i + " - " + options[i]);
-              }
+                writeln(title);
+                for (int i = 0; i < options.Length; i++)
+                {
+                    writeln(i + " - " + options[i]);
+                }
             }
         }
         class In
         {
-          public static int menu(string title, params string[] options)
-          {
-            Out.printMenu(title, options);
-            int result = prompt("Option");
-            Out.blank();
-            return result;
-          }
-          public static int prompt(string prompt)
-          {
-            Out.write(prompt + ": ");
-            int store = Console.readLine();
-            return store;
-          }
-          public static string prompt(string prompt)
-          {
-              Out.write(prompt + ": ");
-              string store = Console.readLine();
-              return store;
-          }
+            public static int menu(string title, params string[] options)
+            {
+                Out.printMenu(title, options);
+                int result = prompt<int>("Option");
+                Out.blank();
+                return result;
+            }
+            public static T prompt<T>(string prompt)
+            {
+                Out.write(prompt + ": ");
+                T store = (T)Convert.ChangeType(Console.ReadLine(), typeof(T));
+                return store;
+            }
         }
     }
 }
