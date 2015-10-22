@@ -66,13 +66,22 @@ namespace Gerbil
             /// </summary>
             /// <param name="title">Title of menu.</param>
             /// <param name="options">List of options to display.</param>
-            /// <returns>Choice selected by user. (-1 if none)</returns>
+            /// <returns>Zero-indexed choice selected by user. (-1 if none)</returns>
             public static int menu(string title, params string[] options)
             {
                 Out.printMenu(title, options);
-                int result = prompt<int>("Option");
-                Out.blank();
-                return result;
+                Out.writeln("-1 to cancel.");
+                int result = 0;
+                while (true)
+                {
+                    result = prompt<int>("Option");
+                    if(result >= -1 && result < options.Length)
+                    {
+                        Out.blank();
+                        return result;
+                    }
+                    Out.writeln("Invalid input, enter a valid menu choice.");
+                }
             }
             /// <summary>
             /// Prompts the user for input.
@@ -82,9 +91,20 @@ namespace Gerbil
             /// <returns>Input value by user.</returns>
             public static T prompt<T>(string prompt)
             {
-                Out.write(prompt + ": ");
-                T store = (T)Convert.ChangeType(Console.ReadLine(), typeof(T));
-                return store;
+                while (true)
+                {
+                    Out.write(prompt + ": ");
+                    string inval = Console.ReadLine();
+                    try
+                    {
+                        T store = (T)Convert.ChangeType(inval, typeof(T));
+                        return store;
+                    }
+                    catch
+                    {
+                        Out.writeln("Invalid input. Please enter a valid input.");
+                    }
+                }
             }
         }
     }
