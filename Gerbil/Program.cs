@@ -7,6 +7,10 @@ namespace Gerbil
 {
     class Gerbil_Core
     {
+        /// <summary>
+        /// Entry point of program. Handles initial initialization and CLI/arg mode redirects.
+        /// </summary>
+        /// <param name="args">Command line arguments.</param>
         static void Main(string[] args)
         {
             Out.writeln("Gerbil v0.0.1 Alpha");
@@ -37,6 +41,10 @@ namespace Gerbil
                 }
             }
         }
+        /// <summary>
+        /// Launches a Gerbil service.
+        /// </summary>
+        /// <param name="input">Launch arguments.</param>
         private static void cliLaunch(params string[] input)
         {
             switch (input[0])
@@ -58,6 +66,9 @@ namespace Gerbil
                     break;
             }
         }
+        /// <summary>
+        /// Launches wizard that retrieves attack options, then launches appropriate attack mode.
+        /// </summary>
         private static void startAttack()
         {
             int mode = In.menu("Modes", "All", "IP", "IP + Port", "IP + Port Range", "Training");

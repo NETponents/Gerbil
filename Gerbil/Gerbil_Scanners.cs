@@ -12,6 +12,13 @@ namespace Gerbil
     {
         class PortScanner
         {
+            /// <summary>
+            /// Scans a target on a specified port range for open TCP listeners.
+            /// </summary>
+            /// <param name="target">IP address or relative hostname to target.</param>
+            /// <param name="startport">Port to start scanning on.</param>
+            /// <param name="endport">Port to stop scanning on.</param>
+            /// <returns>Array of open ports with active TCP listeners.</returns>
             public static int[] scan(string target, int startport, int endport)
             {
                 List<int> openports = new List<int>();
@@ -24,6 +31,12 @@ namespace Gerbil
                 }
                 return openports.ToArray();
             }
+            /// <summary>
+            /// Scans a target on a specific port for an open TCP listener.
+            /// </summary>
+            /// <param name="target">IP address or relative hostname to target.</param>
+            /// <param name="port">Port to scan.</param>
+            /// <returns>TCP listener found.</returns>
             public static bool scan(string target, int port)
             {
                 TcpClient TcpScan = new TcpClient();
@@ -47,6 +60,11 @@ namespace Gerbil
         }
         class NetworkScanner
         {
+            /// <summary>
+            /// Scans the network for online devices on the specified subnet.
+            /// </summary>
+            /// <param name="subnet">Subnet to scan. (Ex: 192.168.1.)</param>
+            /// <returns>IP addresses of found devices.</returns>
             public static string[] getDevices(string subnet)
             {
                 List<string> devices = new List<string>();

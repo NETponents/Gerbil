@@ -11,6 +11,11 @@ namespace Gerbil
     {
         class PortLookup
         {
+            /// <summary>
+            /// Gets services found on specified active ports.
+            /// </summary>
+            /// <param name="ports">Ports to look up.</param>
+            /// <returns>List of known services.</returns>
             public static string[] getServices(int[] ports)
             {
                 List<string> services = new List<string>();
@@ -29,11 +34,21 @@ namespace Gerbil
                 }
                 return services.ToArray();
             }
+            /// <summary>
+            /// Adds a service to the known services dictionary.
+            /// </summary>
+            /// <param name="serviceName">Name of service.</param>
+            /// <param name="portNumber">Port used by service.</param>
             public static void createService(string serviceName, int portNumber)
             {
                 Directory.CreateDirectory(Path.Combine(Environment.ExpandEnvironmentVariables("%userprofile%"), "Documents", "Gerbil", "memstore", "ports", "services", portNumber.ToString()));
                 File.WriteAllText(Path.Combine(Environment.ExpandEnvironmentVariables("%userprofile%"), "Documents", "Gerbil", "memstore", "ports", "services", portNumber.ToString()) + @"\" + serviceName + ".gerbil", "version=0.1");
             }
+            /// <summary>
+            /// Removes a service from the known service dictionary.
+            /// </summary>
+            /// <param name="serviceName">Name of service.</param>
+            /// <param name="portNumber">Port used by service.</param>
             public static void removeService(string serviceName, int portNumber)
             {
                 try
@@ -45,6 +60,9 @@ namespace Gerbil
                     //File could not be deleted, ignore for now.
                 }
             }
+            /// <summary>
+            /// Populates the known services dictionary with a list of IANA-registered network services.
+            /// </summary>
             public static void initServices()
             {
                 createService("Echo", 7);
@@ -74,6 +92,10 @@ namespace Gerbil
                 createService("SNMP", 161);
                 createService("SNMPTRAP", 162);
             }
+            /// <summary>
+            /// Gerbil service launcher handler method.
+            /// </summary>
+            /// <param name="args">Launch arguments.</param>
             public static void launch(string[] args)
             {
                 if(args[1] == "add")

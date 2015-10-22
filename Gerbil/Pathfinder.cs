@@ -9,6 +9,9 @@ namespace Gerbil
 {
     class Pathfinder
     {
+        /// <summary>
+        /// Launches an attack on the entire network.
+        /// </summary>
         public static void begin()
         {
             // Scan for devices on network
@@ -69,6 +72,10 @@ namespace Gerbil
                 // Launch attacks
             }
         }
+        /// <summary>
+        /// Launches an attack on a specific IP address.
+        /// </summary>
+        /// <param name="ipAddress">IP address or relative hostname to target.</param>
         public static void begin(string ipAddress)
         {
             // Scan device for open ports
@@ -106,6 +113,11 @@ namespace Gerbil
             // Finalize using SNMP
             // Launch attacks
         }
+        /// <summary>
+        /// Launches an attack on a specific machine and port.
+        /// </summary>
+        /// <param name="ipAddress">IP address or relative hostname of target.</param>
+        /// <param name="port">Port to scan for vulnerable services.</param>
         public static void begin(string ipAddress, int port)
         {
             // Scan device for open ports
@@ -136,6 +148,12 @@ namespace Gerbil
             // Finalize using SNMP
             // Launch attacks
         }
+        /// <summary>
+        /// Launches an attack on a specific machine and port range.
+        /// </summary>
+        /// <param name="ipAddress">IP address or relative hostname to target.</param>
+        /// <param name="sPort">Port to start scanning on.</param>
+        /// <param name="ePort">Port to stop scanning on.</param>
         public static void begin(string ipAddress, int sPort, int ePort)
         {
             // Scan device for open ports
@@ -173,6 +191,13 @@ namespace Gerbil
             // Finalize using SNMP
             // Launch attacks
         }
+        /// <summary>
+        /// Launches an attack on a specific machine and port range in training mode.
+        /// </summary>
+        /// <param name="ipAddress">IP address or local hostname to target.</param>
+        /// <param name="sPort">Port to start scanning on.</param>
+        /// <param name="ePort">Port to stop scanning on.</param>
+        /// <param name="training">Training mode.</param>
         public static void begin(string ipAddress, int sPort, int ePort, bool training)
         {
             //TODO: add training mode method calls
