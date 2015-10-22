@@ -45,6 +45,7 @@ namespace Gerbil
           {
             Out.printMenu(title, options);
             int result = prompt("Option");
+            Out.blank();
             return result;
           }
           public static int prompt(string prompt)
