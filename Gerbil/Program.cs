@@ -25,9 +25,7 @@ namespace Gerbil
             //TODO: initialize settings file
             while (true)
             {
-                Console.Write("Gerbil> ");
-                string input = "";
-                input = Console.ReadLine();
+                string input = In.prompt("Gerbil");
                 switch (input.Split(' ')[0])
                 {
                     case "exit":
