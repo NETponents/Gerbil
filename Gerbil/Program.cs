@@ -1,6 +1,7 @@
-﻿using System;
+using System;
 using System.IO;
 using System.Net.Sockets;
+using Gerbil.Gerbil_IO;
 
 namespace Gerbil
 {
@@ -8,13 +9,13 @@ namespace Gerbil
     {
         static void Main()
         {
-            Console.WriteLine("Gerbil v0.0.1 Alpha");
-            Console.WriteLine("Copyright 2015 under the GPL V3 License");
-            Console.WriteLine("NETponents or its authors assume no responsibility for this program or its actions.");
-            Console.WriteLine("Starting up...");
+            Out.println("Gerbil v0.0.1 Alpha");
+            Out.println("Copyright 2015 under the GPL V3 License");
+            Out.println("NETponents or its authors assume no responsibility for this program or its actions.");
+            Out.println("Starting up...");
             if (Directory.Exists(Path.Combine(Environment.ExpandEnvironmentVariables("%userprofile%"), "Documents", "Gerbil")))
             {
-                Console.WriteLine("Found AI temp storage folder.");
+                Out.println("Found AI temp storage folder.");
             }
             else
             {
@@ -42,24 +43,14 @@ namespace Gerbil
                         startAttack();
                         break;
                     default:
-                        Console.WriteLine("ERROR: Command not found.");
+                        Out.println("ERROR: Command not found.");
                         break;
                 }
             }
         }
         private static void startAttack()
         {
-            Console.WriteLine("-------------------");
-            Console.WriteLine("|      Modes      |");
-            Console.WriteLine("| 0 - All         |");
-            Console.WriteLine("| 1 - IP          |");
-            Console.WriteLine("| 2 - IP + Port   |");
-            Console.WriteLine("| 3 - IP + Ports  |");
-            Console.WriteLine("| 4 - Training    |");
-            Console.WriteLine("-------------------");
-            Console.Write("Mode: ");
-            int mode = Convert.ToInt32(Console.ReadLine());
-            Console.WriteLine();
+            int mode = In.menu("Modes", "All", "IP", "IP + Port", "IP + Port Range", "Training");
             switch(mode)
             {
                 case 0:
