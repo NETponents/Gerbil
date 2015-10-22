@@ -77,7 +77,6 @@ namespace Gerbil
                     result = prompt<int>("Option");
                     if(result >= -1 && result < options.Length)
                     {
-                        Out.blank();
                         return result;
                     }
                     Out.writeln("Invalid input, enter a valid menu choice.");

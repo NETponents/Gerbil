@@ -65,13 +65,13 @@ namespace Gerbil
             /// </summary>
             /// <param name="subnet">Subnet to scan. (Ex: 192.168.1.)</param>
             /// <returns>IP addresses of found devices.</returns>
-            public static string[] getDevices(string subnet)
+            public static string[] getDevices(string subnet, int timeout)
             {
                 List<string> devices = new List<string>();
                 for(int i = 1; i < 255; i++)
                 {
                     Ping pinger = new Ping();
-                    PingReply reply = pinger.Send(subnet + i, 1000);
+                    PingReply reply = pinger.Send(subnet + i, timeout);
                     if(reply.Status != IPStatus.TimedOut)
                     {
                         devices.Add(subnet + i);

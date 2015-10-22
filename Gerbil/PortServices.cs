@@ -34,6 +34,49 @@ namespace Gerbil
                 }
                 return services.ToArray();
             }
+            public static int[] getPorts()
+            {
+               /**DEBUGBLOCK
+                List<string> ports = new List<string>(Directory.EnumerateDirectories(Environment.ExpandEnvironmentVariables("%userprofile%") + @"\Documents\Gerbil\memstore\ports\services"));
+                */
+                List<int> foundPorts = new List<int>();
+                /** DEBUGBLOCK (CONTINUED)
+                foreach(string i in ports)
+                {
+                    foundPorts.Add(Convert.ToInt32(Path.GetDirectoryName(i)));
+                    
+                }*/
+                ////////////////
+                // DEBUG STUB //
+                foundPorts.Add(7);
+                foundPorts.Add(9);
+                foundPorts.Add(17);
+                foundPorts.Add(20);
+                foundPorts.Add(21);
+                foundPorts.Add(22);
+                foundPorts.Add(23);
+                foundPorts.Add(25);
+                foundPorts.Add(42);
+                foundPorts.Add(43);
+                foundPorts.Add(53);
+                foundPorts.Add(67);
+                foundPorts.Add(68);
+                foundPorts.Add(69);
+                foundPorts.Add(80);
+                foundPorts.Add(81);
+                foundPorts.Add(110);
+                foundPorts.Add(113);
+                foundPorts.Add(123);
+                foundPorts.Add(137);
+                foundPorts.Add(138);
+                foundPorts.Add(139);
+                foundPorts.Add(143);
+                foundPorts.Add(156);
+                foundPorts.Add(161);
+                foundPorts.Add(162);
+                ////////////////
+                return foundPorts.ToArray();
+            }
             /// <summary>
             /// Adds a service to the known services dictionary.
             /// </summary>

@@ -12,23 +12,14 @@ namespace Gerbil
         /// <summary>
         /// Launches an attack on the entire network.
         /// </summary>
-        public static void begin()
+        public static void begin_auto(string subnet, int timeout)
         {
             // Scan for devices on network
             Out.writeln("Scanning for devices...");
             List<string> devices = new List<string>();
-            /// 192.168.1.x
-            Out.writeln("Searching 192.168.1.x subnet...");
-            string[] sub1 = Gerbil_Scanners.NetworkScanner.getDevices("192.168.1.");
+            Out.writeln("Searching " + subnet + "x subnet...");
+            string[] sub1 = Gerbil_Scanners.NetworkScanner.getDevices(subnet, timeout);
             foreach (string i in sub1)
-            {
-                Out.writeln("Found device:" + i);
-                devices.Add(i);
-            }
-            /// 10.0.0.x
-            Out.writeln("Searching 10.0.0.x subnet...");
-            string[] sub2 = Gerbil_Scanners.NetworkScanner.getDevices("10.0.0.");
-            foreach(string i in sub2)
             {
                 Out.writeln("Found device:" + i);
                 devices.Add(i);
@@ -36,9 +27,19 @@ namespace Gerbil
             // Loop system scan on all responding systems
             foreach(string address in devices)
             {
+                Out.blank();
                 // Scan device for open ports
-                Out.writeln("Probing ports...");
-                int[] openPorts = Gerbil_Scanners.PortScanner.scan(address, 0, 1000);
+                Out.writeln("Probing known ports on " + address + "...");
+                int[] knownPorts = Gerbil_PortServices.PortLookup.getPorts();
+                List<int> tempFoundPorts = new List<int>();
+                foreach(int i in knownPorts)
+                {
+                    if (Gerbil_Scanners.PortScanner.scan(address, i))
+                    {
+                        tempFoundPorts.Add(i);
+                    }
+                }
+                int[] openPorts = tempFoundPorts.ToArray();
                 if (openPorts.Length > 0)
                 {
                     for (int i = 0; i < openPorts.Length; i++)

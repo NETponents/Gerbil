@@ -75,7 +75,10 @@ namespace Gerbil
             switch(mode)
             {
                 case 0:
-                    Pathfinder.begin();
+                    string subnet = In.prompt<string>("Target subnet (Ex: 192.168.1.0)");
+                    subnet = subnet.Substring(0, subnet.Length - 1);
+                    int timeout = In.prompt<int>("Max timeout for ping");
+                    Pathfinder.begin_auto(subnet, timeout);
                     break;
                 case 1:
                     string ip = In.prompt<string>("Target IP address");
@@ -97,6 +100,9 @@ namespace Gerbil
                     int porta2 = In.prompt<int>("Start port");
                     int portb2 = In.prompt<int>("End port");
                     Pathfinder.begin(ip4, porta2, portb2, true);
+                    break;
+                case 5:
+                    Out.writeln("Attack canceled.");
                     break;
                 default:
                     Out.writeln("ERROR: Unrecognized option.");
