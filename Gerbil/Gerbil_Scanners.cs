@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Net.NetworkInformation;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -16,14 +17,14 @@ namespace Gerbil
                 List<int> openports = new List<int>();
                 for (int i = startport; i <= endport; i++)
                 {
-                    if(isOpen(target, i))
+                    if(scan(target, i))
                     {
                         openports.Add(i);
                     }
                 }
                 return openports.ToArray();
             }
-            public static bool isOpen(string target, int port)
+            public static bool scan(string target, int port)
             {
                 TcpClient TcpScan = new TcpClient();
                 try
@@ -42,6 +43,23 @@ namespace Gerbil
                 {
                     TcpScan.Close();
                 }
+            }
+        }
+        class NetworkScanner
+        {
+            public static string[] getDevices(string subnet)
+            {
+                List<string> devices = new List<string>();
+                for(int i = 1; i < 255; i++)
+                {
+                    Ping pinger = new Ping();
+                    PingReply reply = pinger.Send(subnet + i, 1000);
+                    if(reply.Status != IPStatus.TimedOut)
+                    {
+                        devices.Add(subnet + i);
+                    }
+                }
+                return devices.ToArray();
             }
         }
     }
