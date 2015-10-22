@@ -55,46 +55,28 @@ namespace Gerbil
                     Pathfinder.begin();
                     break;
                 case 1:
-                    Console.Write("Target IP address: ");
-                    string ip = Console.ReadLine();
-                    Console.WriteLine();
+                    string ip = In.prompt("Target IP address");
                     Pathfinder.begin(ip);
                     break;
                 case 2:
-                    Console.Write("Target IP address: ");
-                    string ip2 = Console.ReadLine();
-                    Console.WriteLine();
-                    Console.Write("Port: ");
-                    int port = Convert.ToInt32(Console.ReadLine());
-                    Console.WriteLine();
+                    string ip2 = In.prompt("Target IP address");
+                    int port = In.prompt("Target port");
                     Pathfinder.begin(ip2, port);
                     break;
                 case 3:
-                    Console.Write("Target IP address: ");
-                    string ip3 = Console.ReadLine();
-                    Console.WriteLine();
-                    Console.Write("Start port: ");
-                    int porta = Convert.ToInt32(Console.ReadLine());
-                    Console.WriteLine();
-                    Console.Write("End port: ");
-                    int portb = Convert.ToInt32(Console.ReadLine());
-                    Console.WriteLine();
+                    string ip3 = In.prompt("Target IP address");
+                    int porta = In.prompt("Start port");
+                    int portb = In.prompt("End port");
                     Pathfinder.begin(ip3, porta, portb);
                     break;
                 case 4:
-                    Console.Write("Target IP address: ");
-                    string ip4 = Console.ReadLine();
-                    Console.WriteLine();
-                    Console.Write("Start port: ");
-                    int porta2 = Convert.ToInt32(Console.ReadLine());
-                    Console.WriteLine();
-                    Console.Write("End port: ");
-                    int portb2 = Convert.ToInt32(Console.ReadLine());
-                    Console.WriteLine();
+                    string ip4 = In.prompt("Target IP address");
+                    int porta2 = In.prompt("Start port");
+                    int portb2 = In.prompt("End port");
                     Pathfinder.begin(ip4, porta2, portb2, true);
                     break;
                 default:
-                    Console.WriteLine("ERROR: Unrecognized option.");
+                    Out.println("ERROR: Unrecognized option.");
                     break;
             }
         }
