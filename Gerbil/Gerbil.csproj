@@ -41,6 +41,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Gerbil_DataService.cs" />
+    <Compile Include="Gerbil_Engine.cs" />
     <Compile Include="Gerbil_IO.cs" />
     <Compile Include="Gerbil_Scanners.cs" />
     <Compile Include="Pathfinder.cs" />
