@@ -68,7 +68,12 @@ namespace Gerbil
                     Out.writeln("No known services found in AI store. Add them manually using 'portservice add serviceName portNumber'");
                     continue;
                 }
-                // Generate server information using AI engine
+                // Forward found services to the AI engine and get server OS
+                Gerbil_Engine.OSResult osr = Gerbil_Engine.GerbilRunner.guessOS(openServices);
+                float ct = osr.getCertainty();
+                ct = (ct - 1.0f) * 10.0f;
+                Out.writeln("OS Guess: " + osr.getName());
+                Out.writeln(String.Format("Certainty: {0:F2}%", osr.getCertainty()));
                 // Finalize using SNMP
                 // Launch attacks
             }
