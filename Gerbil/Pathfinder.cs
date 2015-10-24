@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Net;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -67,6 +68,12 @@ namespace Gerbil
                 {
                     Out.writeln("No known services found in AI store. Add them manually using 'portservice add serviceName portNumber'");
                     continue;
+                }
+                if(openServices.Contains("NETBIOS"))
+                {
+                    string devName = "";
+                    devName = Dns.GetHostByAddress(address).HostName;
+                    Out.writeln("NETBIOS Name: " + devName);
                 }
                 // Forward found services to the AI engine and get server OS
                 Gerbil_Engine.OSResult osr = Gerbil_Engine.GerbilRunner.guessOS(openServices);
