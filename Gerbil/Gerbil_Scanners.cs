@@ -19,12 +19,12 @@ namespace Gerbil
             /// <param name="startport">Port to start scanning on.</param>
             /// <param name="endport">Port to stop scanning on.</param>
             /// <returns>Array of open ports with active TCP listeners.</returns>
-            public static int[] scan(string target, int startport, int endport)
+            public static int[] scan(string target, int startport, int endport, int timeout)
             {
                 List<int> openports = new List<int>();
                 for (int i = startport; i <= endport; i++)
                 {
-                    if(scan(target, i))
+                    if(scan(target, i, timeout))
                     {
                         openports.Add(i);
                     }
@@ -37,9 +37,10 @@ namespace Gerbil
             /// <param name="target">IP address or relative hostname to target.</param>
             /// <param name="port">Port to scan.</param>
             /// <returns>TCP listener found.</returns>
-            public static bool scan(string target, int port)
+            public static bool scan(string target, int port, int timeout)
             {
                 TcpClient TcpScan = new TcpClient();
+                TcpScan.SendTimeout = timeout;
                 try
                 {
                     // Try to connect 

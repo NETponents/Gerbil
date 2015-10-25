@@ -127,13 +127,24 @@ namespace Gerbil
                 createService("POP3", 110);
                 createService("IDENT", 113);
                 createService("NTP", 123);
+                createService("RPC", 135);
                 createService("NETBIOS", 137);
                 createService("NETBIOS", 138);
+                createService("NetLogon", 138);
                 createService("NETBIOS", 139);
                 createService("IMAP", 143);
                 createService("SQL", 156);
                 createService("SNMP", 161);
                 createService("SNMPTRAP", 162);
+                createService("LDAP", 389);
+                createService("SMB", 445);
+                createService("CIFS", 445);
+                createService("NetLogonR", 445);
+                createService("SamR", 445);
+                createService("SvrSvc", 445);
+                createService("LPD", 515);
+                createService("IPP", 631);
+                createService("iSCSI", 3260);
             }
             /// <summary>
             /// Gerbil service launcher handler method.
@@ -148,6 +159,10 @@ namespace Gerbil
                 else if(args[1] == "remove")
                 {
                     removeService(args[2], Convert.ToInt32(args[3]));
+                }
+                else if(args[1] == "restore")
+                {
+                    initServices();
                 }
             }
         }

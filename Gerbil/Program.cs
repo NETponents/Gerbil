@@ -82,7 +82,8 @@ namespace Gerbil
                     break;
                 case 1:
                     string ip = In.prompt<string>("Target IP address");
-                    Pathfinder.begin(ip);
+                    int timeout2 = In.prompt<int>("Max timeout for ping");
+                    Pathfinder.begin(ip, timeout2);
                     break;
                 case 2:
                     string ip2 = In.prompt<string>("Target IP address");
@@ -93,13 +94,15 @@ namespace Gerbil
                     string ip3 = In.prompt<string>("Target IP address");
                     int porta = In.prompt<int>("Start port");
                     int portb = In.prompt<int>("End port");
-                    Pathfinder.begin(ip3, porta, portb);
+                    int timeout3 = In.prompt<int>("Max timeout for ping");
+                    Pathfinder.begin(ip3, porta, portb, timeout3);
                     break;
                 case 4:
                     string ip4 = In.prompt<string>("Target IP address");
                     int porta2 = In.prompt<int>("Start port");
                     int portb2 = In.prompt<int>("End port");
-                    Pathfinder.begin(ip4, porta2, portb2, true);
+                    int timeout4 = In.prompt<int>("Max timeout for ping");
+                    Pathfinder.begin(ip4, porta2, portb2, timeout4, true);
                     break;
                 case 5:
                     Out.writeln("Attack canceled.");

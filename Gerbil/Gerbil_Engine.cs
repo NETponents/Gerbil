@@ -56,6 +56,7 @@ namespace Gerbil
                 Dictionary<string, float> results = net.getResults();
                 string resultName = "Unknown";
                 float resultCertainty = 0.0f;
+                float maxCertainty = 0.0f;
                 // Find most likely answer
                 foreach(KeyValuePair<string, float> i in results)
                 {
@@ -63,8 +64,10 @@ namespace Gerbil
                     {
                         resultName = i.Key;
                         resultCertainty = i.Value;
+                        maxCertainty += i.Value;
                     }
                 }
+                resultCertainty = resultCertainty / maxCertainty;
                 result = new OSResult(resultName, resultCertainty);
                 return result;
             }
@@ -279,6 +282,8 @@ namespace Gerbil
             }
             class Network
             {
+                public static Random rd = new Random();
+
                 private Dictionary<string,Node> nodes;
                 private Dictionary<string, InputNode> inputs;
                 private Dictionary<string, OutputNode> outputs;
@@ -296,36 +301,49 @@ namespace Gerbil
                     addConnector(cName, weight, inNode);
                     nodes.Add(nName, new Node(nName, ref connectors, cName));
                 }
-                public void addConnector(string cName, float weight, string inNode)
+                public string addConnector(string cName, float weight, string inNode)
                 {
+                    string rcName = cName;
+                    if(connectors.ContainsKey(cName))
+                    {
+                        rcName = rcName + rd.Next(10000, 99999).ToString();
+                    }
                     if (inputs.ContainsKey(inNode))
                     {
-                        connectors.Add(cName, new Connection(weight, ref inputs, inNode));
+                        connectors.Add(rcName, new Connection(weight, ref inputs, inNode));
                     }
                     else if (nodes.ContainsKey(inNode))
                     {
-                        connectors.Add(cName, new Connection(weight, ref nodes, inNode));
+                        connectors.Add(rcName, new Connection(weight, ref nodes, inNode));
                     }
                     else
                     {
                         throw new NodeNotFoundException();
                     }
+                    return rcName;
                 }
                 public void addOutput(string oName, string cName, float weight, string inNode)
                 {
-                    addConnector(cName, weight, inNode);
+                    string rcName = addConnector(cName, weight, inNode);
                     if (!outputs.ContainsKey(oName))
                     {
-                        outputs.Add(oName, new OutputNode(oName, ref connectors, cName));
+                        outputs.Add(oName, new OutputNode(oName, ref connectors, rcName));
                     }
                     else
                     {
-                        outputs[oName].addConnection(ref connectors, cName);
+                        outputs[oName].addConnection(ref connectors, rcName);
                     }
                 }
                 public void addInput(string name)
                 {
-                    inputs.Add(name, new InputNode(name));
+                    if(inputs.ContainsKey(name))
+                    {
+                        // Do nothing, input key already exists
+                    }
+                    else
+                    {
+                        inputs.Add(name, new InputNode(name));
+                    }
                 }
                 public Dictionary<string, float> getResults()
                 {

@@ -35,7 +35,7 @@ namespace Gerbil
                 List<int> tempFoundPorts = new List<int>();
                 foreach(int i in knownPorts)
                 {
-                    if (Gerbil_Scanners.PortScanner.scan(address, i))
+                    if (Gerbil_Scanners.PortScanner.scan(address, i, timeout))
                     {
                         tempFoundPorts.Add(i);
                     }
@@ -72,16 +72,21 @@ namespace Gerbil
                 if(openServices.Contains("NETBIOS"))
                 {
                     string devName = "";
-                    devName = Dns.GetHostByAddress(address).HostName;
+                    devName = Dns.GetHostEntry(address).HostName;
                     Out.writeln("NETBIOS Name: " + devName);
                 }
                 // Forward found services to the AI engine and get server OS
                 Gerbil_Engine.OSResult osr = Gerbil_Engine.GerbilRunner.guessOS(openServices);
                 float ct = osr.getCertainty();
-                ct = (ct - 1.0f) * 10.0f;
+                ct = ct * 10.0f;
                 Out.writeln("OS Guess: " + osr.getName());
                 Out.writeln(String.Format("Certainty: {0:F2}%", osr.getCertainty()));
-                // Finalize using SNMP
+                // Guess more data based on running services
+                // HTTP
+                if(openServices.Contains("HTTP"))
+                {
+
+                }
                 // Launch attacks
             }
         }
@@ -89,11 +94,11 @@ namespace Gerbil
         /// Launches an attack on a specific IP address.
         /// </summary>
         /// <param name="ipAddress">IP address or relative hostname to target.</param>
-        public static void begin(string ipAddress)
+        public static void begin(string ipAddress, int timeout)
         {
             // Scan device for open ports
             Out.writeln("Probing ports...");
-            int[] openPorts = Gerbil_Scanners.PortScanner.scan(ipAddress, 0, 1000);
+            int[] openPorts = Gerbil_Scanners.PortScanner.scan(ipAddress, 0, 1000, timeout);
             if (openPorts.Length > 0)
             {
                 for (int i = 0; i < openPorts.Length; i++)
@@ -123,7 +128,24 @@ namespace Gerbil
                 return;
             }
             // Generate server information using AI engine
-            // Finalize using SNMP
+            if (openServices.Contains("NETBIOS"))
+            {
+                string devName = "";
+                devName = Dns.GetHostEntry(ipAddress).HostName;
+                Out.writeln("NETBIOS Name: " + devName);
+            }
+            // Forward found services to the AI engine and get server OS
+            Gerbil_Engine.OSResult osr = Gerbil_Engine.GerbilRunner.guessOS(openServices);
+            float ct = osr.getCertainty();
+            ct = ct * 10.0f;
+            Out.writeln("OS Guess: " + osr.getName());
+            Out.writeln(String.Format("Certainty: {0:F2}%", osr.getCertainty()));
+            // Guess more data based on running services
+            // HTTP
+            if (openServices.Contains("HTTP"))
+            {
+
+            }
             // Launch attacks
         }
         /// <summary>
@@ -131,11 +153,11 @@ namespace Gerbil
         /// </summary>
         /// <param name="ipAddress">IP address or relative hostname of target.</param>
         /// <param name="port">Port to scan for vulnerable services.</param>
-        public static void begin(string ipAddress, int port)
+        public static void begin(string ipAddress, int port, int timeout)
         {
             // Scan device for open ports
             Out.writeln("Probing port...");
-            if (Gerbil_Scanners.PortScanner.scan(ipAddress, port))
+            if (Gerbil_Scanners.PortScanner.scan(ipAddress, port, timeout))
             {
                 Out.writeln("No open ports found for the specified host and port range.");
                 return;
@@ -167,11 +189,11 @@ namespace Gerbil
         /// <param name="ipAddress">IP address or relative hostname to target.</param>
         /// <param name="sPort">Port to start scanning on.</param>
         /// <param name="ePort">Port to stop scanning on.</param>
-        public static void begin(string ipAddress, int sPort, int ePort)
+        public static void begin(string ipAddress, int sPort, int ePort, int timeout)
         {
             // Scan device for open ports
             Out.writeln("Probing ports...");
-            int[] openPorts = Gerbil_Scanners.PortScanner.scan(ipAddress, sPort, ePort);
+            int[] openPorts = Gerbil_Scanners.PortScanner.scan(ipAddress, sPort, ePort, timeout);
             if (openPorts.Length > 0)
             {
                 for (int i = 0; i < openPorts.Length; i++)
@@ -211,13 +233,13 @@ namespace Gerbil
         /// <param name="sPort">Port to start scanning on.</param>
         /// <param name="ePort">Port to stop scanning on.</param>
         /// <param name="training">Training mode.</param>
-        public static void begin(string ipAddress, int sPort, int ePort, bool training)
+        public static void begin(string ipAddress, int sPort, int ePort, int timeout, bool training)
         {
             //TODO: add training mode method calls
             
             // Scan device for open ports
             Out.writeln("Probing ports...");
-            int[] openPorts = Gerbil_Scanners.PortScanner.scan(ipAddress, sPort, ePort);
+            int[] openPorts = Gerbil_Scanners.PortScanner.scan(ipAddress, sPort, ePort, timeout);
             if (openPorts.Length > 0)
             {
                 for (int i = 0; i < openPorts.Length; i++)
