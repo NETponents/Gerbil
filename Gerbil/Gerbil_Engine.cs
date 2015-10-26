@@ -23,6 +23,10 @@ namespace Gerbil
                 NeuralNetwork.Network net = new NeuralNetwork.Network();
 
                 // Load in data to memory
+                if (!File.Exists(Path.Combine(Environment.ExpandEnvironmentVariables("%userprofile%"), "Documents", "Gerbil", "memstore", "OSServiceTraining.ini")))
+                {
+                    return new OSResult("ERROR", 0.0f);
+                }
                 string[] trainingData = File.ReadAllLines(Path.Combine(Environment.ExpandEnvironmentVariables("%userprofile%"), "Documents", "Gerbil", "memstore","OSServiceTraining.ini"));
                 // Calculate weights
                 PairCounter pc = new PairCounter();
