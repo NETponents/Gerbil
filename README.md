@@ -6,7 +6,7 @@ Gerbil is an automated hacking tool powered by a trainable AI engine. It was ori
 Gerbil is still in it's early stages. Right now it's just a fancy network scanner. If you have experience in C#, feel free to contribute to help speed up development!
 
 ## System requirements
-Doesn't matter if you have a Cray supercomputer or a patato. If it can run .NET 4.5, you are good to go.
+Doesn't matter if you have a Cray supercomputer or a potato. If it can run .NET 4.5, you are good to go.
 
 ## Download
 To get Gerbil, `git clone` this repository to your hard drive. From there, open up *~/Gerbil/Gerbil.sln* Using Visual Studio 2012 or later. Compile the project using the **Release** build profile. After which, check the *~/Gerbil/bin/release* folder and run *gerbil.exe*.
