@@ -53,7 +53,11 @@ namespace Gerbil
                     catch(NeuralNetwork.NodeNotFoundException e)
                     {
                         // Serive does not exist, since we are not in training mode, ignore.
-                        int j = 0;
+                    }
+                    catch
+                    {
+                        // A serious engine error occured. Throw fatal error.
+                        throw new FatalEngineException();
                     }
                 }
                 // Get outputs
@@ -374,6 +378,10 @@ namespace Gerbil
             {
 
             }
+        }
+        class FatalEngineException : Exception
+        {
+
         }
     }
 }
