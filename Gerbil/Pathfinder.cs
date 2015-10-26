@@ -75,7 +75,7 @@ namespace Gerbil
                 // Forward found services to the AI engine and get server OS
                 Gerbil_Engine.OSResult osr = Gerbil_Engine.GerbilRunner.guessOS(openServices);
                 float ct = osr.getCertainty();
-                ct = ct * 10.0f;
+                ct = ct * 1000.0f;
                 Out.writeln("OS Guess: " + osr.getName());
                 Out.writeln(String.Format("Certainty: {0:F2}%", osr.getCertainty()));
                 // Guess more data based on running services
