@@ -355,6 +355,10 @@ namespace Gerbil
                 }
                 public Dictionary<string, float> getResults()
                 {
+                    if (inputs.Count == 0 || outputs.Count == 0)
+                    {
+                        throw new EmptyNodeGroupException();
+                    }
                     Dictionary<string, float> results = new Dictionary<string, float>();
                     foreach(KeyValuePair<string, OutputNode> i in outputs)
                     {
@@ -364,6 +368,10 @@ namespace Gerbil
                 }
                 public void fireInput(string fireNode)
                 {
+                    if(inputs.Count == 0 || outputs.Count == 0)
+                    {
+                        throw new EmptyNodeGroupException();
+                    }
                     if (inputs.ContainsKey(fireNode))
                     {
                         inputs[fireNode].Fire();
@@ -375,6 +383,10 @@ namespace Gerbil
                 }
             }
             class NodeNotFoundException : Exception
+            {
+
+            }
+            class EmptyNodeGroupException : Exception
             {
 
             }
