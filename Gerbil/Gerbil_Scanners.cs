@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Net.Sockets;
+using Gerbil;
 
 namespace Gerbil
 {
@@ -76,6 +77,7 @@ namespace Gerbil
                     if(reply.Status != IPStatus.TimedOut)
                     {
                         devices.Add(subnet + i);
+                        Gerbil_IO.Out.writeln("Found device: " + subnet + i);
                     }
                 }
                 return devices.ToArray();

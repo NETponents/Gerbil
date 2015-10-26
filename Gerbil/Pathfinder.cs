@@ -22,7 +22,6 @@ namespace Gerbil
             string[] sub1 = Gerbil_Scanners.NetworkScanner.getDevices(subnet, timeout);
             foreach (string i in sub1)
             {
-                Out.writeln("Found device:" + i);
                 devices.Add(i);
             }
             // Loop system scan on all responding systems
@@ -38,17 +37,15 @@ namespace Gerbil
                     if (Gerbil_Scanners.PortScanner.scan(address, i, timeout))
                     {
                         tempFoundPorts.Add(i);
+                        Out.writeln(i + ": OPEN");
+                    }
+                    else
+                    {
+                        Out.writeln(i + ": CLOSED");
                     }
                 }
                 int[] openPorts = tempFoundPorts.ToArray();
-                if (openPorts.Length > 0)
-                {
-                    for (int i = 0; i < openPorts.Length; i++)
-                    {
-                        Out.writeln("Found port: " + openPorts[i]);
-                    }
-                }
-                else
+                if(openPorts.Length == 0)
                 {
                     Out.writeln("No open ports found for the specified host and port range.");
                     continue;
