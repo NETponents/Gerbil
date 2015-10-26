@@ -310,7 +310,7 @@ namespace Gerbil
                     string rcName = cName;
                     if(connectors.ContainsKey(cName))
                     {
-                        rcName = rcName + rd.Next(10000, 99999).ToString();
+                        rcName = rcName + rd.Next(100000, 999999).ToString();
                     }
                     if (inputs.ContainsKey(inNode))
                     {

@@ -90,9 +90,20 @@ namespace Gerbil
             /// <returns>Input value by user.</returns>
             public static T prompt<T>(string prompt)
             {
+                return prompt<T>(prompt, ':');
+            }
+            /// <summary>
+            /// Prompts the user for input.
+            /// </summary>
+            /// <typeparam name="T">Type of variable to return.</typeparam>
+            /// <param name="prompt">Prompt to display to user.</param>
+            /// <param name="promptKey">Prompt char to display.</param>
+            /// <returns>Input value by user.</returns>
+            public static T prompt<T>(string prompt, char promptKey)
+            {
                 while (true)
                 {
-                    Out.write(prompt + ": ");
+                    Out.write(prompt + promptKey + " ");
                     string inval = Console.ReadLine();
                     try
                     {

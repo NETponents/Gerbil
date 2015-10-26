@@ -36,7 +36,7 @@ namespace Gerbil
             {
                 while (true)
                 {
-                    string input = In.prompt<string>("Gerbil");
+                    string input = In.prompt<string>("Gerbil", '>');
                     cliLaunch(input.Split());
                 }
             }
@@ -60,6 +60,22 @@ namespace Gerbil
                     break;
                 case "start":
                     startAttack();
+                    break;
+                case "help":
+                    Out.writeln("Common Gerbil CLI commands:");
+                    Out.writeln("'start' - Switch program from CLI to attack mode.");
+                    Out.writeln("'config' - NOT IMPLEMENTED.");
+                    Out.writeln("'portservice add|remove SERVICE PORTNUMBER' - Adds or removes services to the port conversion dictionary.");
+                    Out.writeln("'portservice restore' - Resets the port conversion dictionary to it's default listings.");
+                    Out.writeln("'about' - Prints information about current instance of Gerbil.");
+                    Out.writeln("'exit' - Closes the Gerbil CLI.");
+                    break;
+                case "about":
+                    Out.writeln("Gerbil v0.0.1 alpha");
+                    Out.writeln("Development release");
+                    Out.writeln("Engine: Gerbil v0.1a");
+                    Out.writeln("Version: GitHub DRv0.0.1a");
+                    Out.writeln("Copyright 2015 NETponents under GPL V3 License.");
                     break;
                 default:
                     Out.writeln("ERROR: Command not found.");
