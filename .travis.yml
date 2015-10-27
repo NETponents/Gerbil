@@ -1,2 +1,8 @@
 language: csharp
 solution: Gerbil.sln
+branches:
+  only:
+    - stable
+    - beta
+    - nightly
+    - dev
