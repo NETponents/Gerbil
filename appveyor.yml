@@ -122,10 +122,7 @@ build:
 #  - ps: Write-Host "script1"
 
 # scripts to run after tests
-after_test:
- - "SET PATH=C:\\Python34;C:\\Python34\\Scripts;%PATH%"
- - pip install --user codecov
- - python codecov --token=43fa8e8a-43eb-4e4c-a63e-6d4602b1263f
+#after_test:
 # to run your custom scripts instead of automatic tests
 #test_script:
 
