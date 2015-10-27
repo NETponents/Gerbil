@@ -122,7 +122,9 @@ build:
 #  - ps: Write-Host "script1"
 
 # scripts to run after tests
-#after_test:
+after_test:
+ - pip install --user codecov
+ - codecov --token=43fa8e8a-43eb-4e4c-a63e-6d4602b1263f
 
 # to run your custom scripts instead of automatic tests
 #test_script:
