@@ -163,7 +163,7 @@ namespace Gerbil
                 }
                 // Forward found services to the AI engine and get server OS
                 //TODO: forward training mode parameter
-                Gerbil_Engine.OSResult osr = Gerbil_Engine.GerbilRunner.guessOS(openServices, true);
+                Gerbil_Engine.NetworkResult osr = Gerbil_Engine.GerbilRunner.guessOS(openServices, true);
                 float ct = osr.getCertainty();
                 ct = ct * 1000.0f;
                 Out.writeln("OS Guess: " + osr.getName());
@@ -223,7 +223,7 @@ namespace Gerbil
             }
             // Forward found services to the AI engine and get server OS
             //TODO: forward training parameter
-            Gerbil_Engine.OSResult osr = Gerbil_Engine.GerbilRunner.guessOS(openServices, true);
+            Gerbil_Engine.NetworkResult osr = Gerbil_Engine.GerbilRunner.guessOS(openServices, true);
             float ct = osr.getCertainty();
             ct = ct * 10.0f;
             Out.writeln("OS Guess: " + osr.getName());
