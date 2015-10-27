@@ -208,7 +208,7 @@ namespace Gerbil
                 {
                     NetPathEventArgs e = new NetPathEventArgs();
                     e.value = 1.0f;
-                    e.tag = new Random().Next(10000, 99999).ToString();
+                    e.tag = new Random().Next(1000000000, 9999999999).ToString();
                     base.Fire(this, e);
                 }
             }
