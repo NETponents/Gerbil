@@ -79,6 +79,25 @@ namespace Gerbil
                 return result;
             }
         }
+        class CheckpointNode : Node
+        {
+            private float result;
+            
+            public CheckpointNode(string nName, ref Dictionary<string, Connection> input, string connectorSelector)
+                : base(nName, ref input, connectorSelector)
+            {
+                result = 1.0f;
+            }
+            public override void Fire(object sender, NetPathEventArgs e)
+            {
+                result += (e.value + 1);
+                base.Fire(sender, e);
+            }
+            public float getResult()
+            {
+                return result;
+            }
+        }
         class Connection
         {
             public delegate void ConnectionFiredHandler(object sender, NetPathEventArgs e);
