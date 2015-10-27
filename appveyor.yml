@@ -60,14 +60,6 @@ clone_depth: 5                      # clone entire repository history if not def
 #    password:
 #      secure: $#(JFDA)jQ@#$
 
-
-# build cache to preserve files/folders between builds
-cache:
-  - packages -> **\packages.config  # preserve "packages" directory in the root of build folder but will reset it if packages.config is modified
-  - projectA\libs
-  - node_modules                    # local npm modules
-  - %APPDATA%\npm-cache             # npm cache
-
 # Automatically register private account and/or project AppVeyor NuGet feeds.
 nuget:
   account_feed: true
