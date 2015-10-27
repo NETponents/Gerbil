@@ -60,8 +60,6 @@ clone_depth: 5                      # clone entire repository history if not def
 #    password:
 #      secure: $#(JFDA)jQ@#$
 
-# this is how to allow failing jobs in the matrix
-matrix:
 
 # build cache to preserve files/folders between builds
 cache:
@@ -69,9 +67,6 @@ cache:
   - projectA\libs
   - node_modules                    # local npm modules
   - %APPDATA%\npm-cache             # npm cache
-
-# scripts that run after cloning repository
-install:
 
 # Automatically register private account and/or project AppVeyor NuGet feeds.
 nuget:
@@ -108,16 +103,6 @@ build:
   # MSBuild verbosity level
   verbosity: normal
 
-
-# scripts to run before build
-before_build:
-
-# scripts to run after build
-after_build:
-
-# to run your custom scripts instead of automatic MSBuild
-build_script:
-
 # to disable automatic builds
 #build: off
 
@@ -151,7 +136,6 @@ build_script:
 
 # to run your custom scripts instead of automatic tests
 #test_script:
-  - echo This is my custom test script
 
 # to disable automatic tests 
 #test: off
