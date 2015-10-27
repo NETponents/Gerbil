@@ -63,7 +63,7 @@ namespace Gerbil
         class NetworkScanner
         {
             /// <summary>
-            /// Scans the network for online devices on the specified subnet.
+            /// [Obsolete] Scans the network for online devices on the specified subnet.
             /// </summary>
             /// <param name="subnet">Subnet to scan. (Ex: 192.168.1.)</param>
             /// <returns>IP addresses of found devices.</returns>
@@ -78,6 +78,41 @@ namespace Gerbil
                     {
                         devices.Add(subnet + i);
                         Gerbil_IO.Out.writeln("Found device: " + subnet + i);
+                    }
+                }
+                return devices.ToArray();
+            }
+            /// <summary>
+            /// Scans the network for online devices on the specified subnet.
+            /// </summary>
+            /// <param name="subnet">Subnet to scan. (Ex: 192.168.1.x)</param>
+            /// <returns>IP addresses of found devices.</returns>
+            public static string[] getDevices(string subnet, int timeout, int fieldMax)
+            {
+                List<string> devices = new List<string>();
+                for (int i = 1; i < fieldMax; i++)
+                {
+                    Ping pinger = new Ping();
+                    PingReply reply;
+                    bool failed = false;
+                    bool timedOut = false;
+                    try
+                    {
+                        reply = pinger.Send(subnet.Replace("x",i.ToString()), timeout);
+                        timedOut = (reply.Status == IPStatus.TimedOut);
+                    }
+                    catch
+                    {
+                        // Ping error, subnet does not exist.
+                        failed = true;
+                    }
+                    if (!failed)
+                    {
+                        if (!timedOut)
+                        {
+                            devices.Add(subnet.Replace("x", i.ToString()));
+                            Gerbil_IO.Out.writeln("Found device: " + subnet.Replace("x", i.ToString()));
+                        }
                     }
                 }
                 return devices.ToArray();
