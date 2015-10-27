@@ -16,16 +16,16 @@ namespace Gerbil
             {
                 target = dTarget;
             }
-            public static OSResult guessOS(string[] foundServices, bool training)
+            public static NetworkResult guessOS(string[] foundServices, bool training)
             {
-                OSResult result;
+                NetworkResult result;
                 // Initialize objects
                 NeuralNetwork.Network net = new NeuralNetwork.Network();
 
                 // Load in data to memory
                 if (!File.Exists(Path.Combine(Environment.ExpandEnvironmentVariables("%userprofile%"), "Documents", "Gerbil", "memstore", "OSServiceTraining.ini")))
                 {
-                    return new OSResult("ERROR", 0.0f);
+                    return new NetworkResult("ERROR", 0.0f);
                 }
                 string[] trainingData = File.ReadAllLines(Path.Combine(Environment.ExpandEnvironmentVariables("%userprofile%"), "Documents", "Gerbil", "memstore","OSServiceTraining.ini"));
                 // Calculate weights
@@ -85,7 +85,20 @@ namespace Gerbil
                     }
                 }
                 resultCertainty = resultCertainty / maxCertainty;
-                result = new OSResult(resultName, resultCertainty);
+                result = new NetworkResult(resultName, resultCertainty);
+                return result;
+            }
+            public static NetworkResult guessHTTPService()
+            {
+                NetworkResult result = new NetworkResult("Unknown", 100.0f);
+                NeuralNetwork.Network net = new NeuralNetwork.Network();
+                net.addInput("Windows");
+                net.addInput("Linux");
+                net.addInput("FreeBSD");
+                net.addInput("PHP");
+                net.addInput("ASP.NET");
+                net.addInput("Static");
+                net.addInput("Ruby/Node.js");
                 return result;
             }
             private static Dictionary<Pair, float> getPercentagesFromPair(Dictionary<Pair, int> input)
@@ -103,19 +116,19 @@ namespace Gerbil
                 return result;
             }
         }
-        struct OSResult
+        struct NetworkResult
         {
-            private string osName;
+            private string itemName;
             private float certainty;
 
-            public OSResult(string name, float ct)
+            public NetworkResult(string name, float ct)
             {
-                osName = name;
+                itemName = name;
                 certainty = ct;
             }
             public string getName()
             {
-                return osName;
+                return itemName;
             }
             public float getCertainty()
             {
