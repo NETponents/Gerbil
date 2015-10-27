@@ -223,7 +223,7 @@ namespace Gerbil
                 }
                 public override void Fire(object sender, NetPathEventArgs e)
                 {
-                    result *= (e.value + 1);
+                    result += (e.value + 1);
                 }
                 public float getResult()
                 {
