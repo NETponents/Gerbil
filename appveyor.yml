@@ -12,7 +12,7 @@
 # version: 1.0.{build}
 
 # you can use {branch} name in version format too
-version: 1.0.{build}-{branch}
+version: 1.0:{build} ({branch})
 
 # branches to build
 branches:
@@ -76,8 +76,6 @@ nuget:
 
 # to add several platforms to build matrix:
 platform:
-  - x86
-  - x64
   - Any CPU
 
 # build Configuration, i.e. Debug, Release, etc.
