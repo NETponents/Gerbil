@@ -30,11 +30,11 @@ Binary releases are available with each push to the *stable* branch.
 ## Use
 Gerbil uses a custom CLI. See the project wiki on the right-hand side for CLI command usage.
 
+[Read more >](http://github.com/NETponents/Gerbil/wiki/CLI-Commands)
+
 ## Want to contribute?
 
 See our [contributing guidelines](http://github.com/NETponents/Gerbil/tree/dev/CONTRIBUTING.md).
-
-[Read more >](http://github.com/NETponents/Gerbil/wiki/CLI-Commands)
 
 ## Obvious Legal Disclaimer
 Since this is technically a "hacking tool", NETponents, @ARMmaster17, or any other contributers cannot be held liable for actions taken by this software on either your own or someone elses network. We reccommend testing Gerbil on a protected private lab network since Gerbil does posses tools to potentially wipe/modify network computer hard disks.
