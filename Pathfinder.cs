@@ -110,8 +110,6 @@ namespace Gerbil
                     devices.Add(i);
                 }
             }
-            Out.writeln("Searching " + subnet + " subnet...");
-            string[] sub2 = Gerbil_Scanners.NetworkScanner.getDevices(subnet, timeout);
             
             // Loop system scan on all responding systems
             foreach(string address in devices)
