@@ -12,7 +12,7 @@ Doesn't matter if you have a Cray supercomputer or a potato. If it can run .NET 
 ## Download
 To get Gerbil, `git clone` this repository to your hard drive. From there, open up *~/Gerbil/Gerbil.sln* Using Visual Studio 2012 or later. Compile the project using the **Release** build profile. After which, check the *~/Gerbil/bin/release* folder and run *gerbil.exe*.
 
-Binary releases will be availible once we release a stable package of Gerbil.
+Binary releases are available with each push to the *stable* branch.
 
 ## Use
 Gerbil uses a custom CLI. See the project wiki on the right-hand side for CLI command usage.
