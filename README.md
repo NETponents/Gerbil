@@ -30,6 +30,10 @@ Binary releases are available with each push to the *stable* branch.
 ## Use
 Gerbil uses a custom CLI. See the project wiki on the right-hand side for CLI command usage.
 
+## Want to contribute?
+
+See our [contributing guidelines](http://github.com/NETponents/Gerbil/tree/dev/CONTRIBUTING.md).
+
 [Read more >](http://github.com/NETponents/Gerbil/wiki/CLI-Commands)
 
 ## Obvious Legal Disclaimer
