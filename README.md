@@ -1,5 +1,7 @@
 # Gerbil
 [![Build status](https://ci.appveyor.com/api/projects/status/3v9lq10jpng3i8ag?svg=true)](https://ci.appveyor.com/project/ARMmaster17/gerbil)
+[![Issue Stats](http://issuestats.com/github/NETponents/Gerbil/badge/pr?style=flat)](http://issuestats.com/github/NETponents/Gerbil)
+[![Issue Stats](http://issuestats.com/github/NETponents/Gerbil/badge/issue?style=flat)](http://issuestats.com/github/NETponents/Gerbil)
 ## What is it?
 Gerbil is an automated hacking tool powered by a trainable AI engine. It was originally designed to be an automated network penetration tester by scanning your network for weak points. When it does find a weak point, it will use previous experience to decide how to attack the server.
 
