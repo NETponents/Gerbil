@@ -59,24 +59,9 @@ namespace Gerbil
             /// <summary>
             /// Attacks the given client, will only attempt once
             /// </summary>
-            public virtual void stab()
+            public AttackerResult stab()
             {
-                if(attackerStatus == AttackerResult.Created)
-                {
-                    throw new AttackerNotInitializedException();
-                }
-                else if(attackerStatus ==  AttackerResult.FailedConnection)
-                {
-                    throw new AttackerNoTargetFoundException();
-                }
-                else if(attackerStatus == AttackerResult.FailedAuth)
-                {
-                    throw new AttackerAttemptsExhaustedException();
-                }
-                else if(attackerStatus == AttackerResult.Penetrated)
-                {
-                    throw new AttackerAlreadyPenetratedException();
-                }
+                return new AttackerResult();
             }
             /// <summary>
             /// Deletes all evidence and closes connection to target
