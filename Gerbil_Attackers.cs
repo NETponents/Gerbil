@@ -59,7 +59,7 @@ namespace Gerbil
             /// <summary>
             /// Attacks the given client, will only attempt once
             /// </summary>
-            public AttackerResult stab()
+            public virtual AttackerResult stab()
             {
                 return new AttackerResult();
             }
