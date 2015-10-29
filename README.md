@@ -1,5 +1,7 @@
 # Gerbil
 ## What is it?
+
+[![Join the chat at https://gitter.im/NETponents/Gerbil](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/NETponents/Gerbil?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 Gerbil is an automated hacking tool powered by a trainable AI engine. It was originally designed to be an automated network penetration tester by scanning your network for weak points. When it does find a weak point, it will use previous experience to decide how to attack the server.
 
 ## Project State
