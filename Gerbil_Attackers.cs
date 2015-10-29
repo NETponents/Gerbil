@@ -31,6 +31,10 @@ namespace Gerbil
         {
             
         }
+        public class AttackerAlreadyPenetratedException : Exception
+        {
+            
+        }
         public class Attacker
         {
             private AttackerResult attackerStatus;
@@ -52,7 +56,7 @@ namespace Gerbil
             /// <summary>
             /// Attacks the given client, will only attempt once
             /// </summary>
-            public virtual void stab()
+            public virtual AttackerResult stab()
             {
                 if(attackerStatus == AttackerResult.Created)
                 {
@@ -66,6 +70,12 @@ namespace Gerbil
                 {
                     throw new AttackerAttemptsExhaustedException();
                 }
+                else if(attackerStatus == AttackerResult.Penetrated)
+                {
+                    throw new AttackerAlreadyPenetratedException();
+                }
+                
+                return attackerStatus;
             }
             /// <summary>
             /// Deletes all evidence and closes connection to target
