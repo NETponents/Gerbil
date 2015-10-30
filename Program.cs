@@ -68,6 +68,7 @@ namespace Gerbil
                     Out.writeln("'portservice add|remove SERVICE PORTNUMBER' - Adds or removes services to the port conversion dictionary.");
                     Out.writeln("'portservice restore' - Resets the port conversion dictionary to it's default listings.");
                     Out.writeln("'about' - Prints information about current instance of Gerbil.");
+                    Out.writeln("'sattack ipaddress attacktype' - Attacks a device using a specific attack mode. (NOT RECOMMENDED)");
                     Out.writeln("'exit' - Closes the Gerbil CLI.");
                     break;
                 case "about":
