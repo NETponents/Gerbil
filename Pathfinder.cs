@@ -10,6 +10,50 @@ namespace Gerbil
 {
     class Pathfinder
     {
+        private static int maxAddressField(char placeholder, string subnet)
+        {
+            int counter = charCount(placeholder, subnet);
+            if(counter > 3)
+            {
+                throw new Exception();
+            }
+            else if(counter == 3)
+            {
+                return 255;
+            }
+            else if(counter == 2)
+            {
+                return 99;
+            }
+            else if(counter == 1)
+            {
+                return 9;
+            }
+            else
+            {
+                throw new Exception();
+            }
+        }
+        private static int charCount(char character, string scanner)
+        {
+            int counter = 0;
+            for (int i = 0; i < scanner.Length; i++)
+            {
+                if (scanner.ToCharArray()[i] == character)
+                {
+                    counter++;
+                }
+            }
+            return counter;
+        }
+        private static string replaceFirst(char indicator, string scanner)
+        {
+            int index = scanner.IndexOf(indicator);
+            int end = scanner.LastIndexOf(indicator);
+            string variableField = scanner.Substring(index, end - index + 1);
+            scanner = scanner.Replace(variableField, indicator.ToString());
+            return scanner;
+        }
         /// <summary>
         /// Launches an attack on the entire network.
         /// </summary>
@@ -18,12 +62,55 @@ namespace Gerbil
             // Scan for devices on network
             Out.writeln("Scanning for devices...");
             List<string> devices = new List<string>();
-            Out.writeln("Searching " + subnet + "x subnet...");
-            string[] sub1 = Gerbil_Scanners.NetworkScanner.getDevices(subnet, timeout);
-            foreach (string i in sub1)
+            if(subnet.Contains("z"))
             {
-                devices.Add(i);
+                int zCount = maxAddressField('z', subnet);
+                int yCount = maxAddressField('y', subnet);
+                int xCount = maxAddressField('x', subnet);
+                subnet = replaceFirst('x', replaceFirst('y', replaceFirst('z', subnet)));
+
+                for(int z = 0; z <= zCount; z++)
+                {
+                    string zMod = subnet.Replace("z", z.ToString());
+                    for(int y = 0; y <= yCount; y++)
+                    {
+                        string yMod = zMod.Replace("y", y.ToString());
+                        Out.writeln("Searching " + yMod + " subnet...");
+                        foreach (string i in Gerbil_Scanners.NetworkScanner.getDevices(yMod, timeout, xCount))
+                        {
+                            devices.Add(i);
+                        }
+                    }
+                }
             }
+            else if(subnet.Contains("y"))
+            {
+                int yCount = maxAddressField('y', subnet);
+                int xCount = maxAddressField('x', subnet);
+                subnet = replaceFirst('x', replaceFirst('y', subnet));
+
+                for (int y = 0; y <= yCount; y++)
+                {
+                    string yMod = subnet.Replace("y", y.ToString());
+                    Out.writeln("Searching " + yMod + " subnet...");
+                    foreach (string i in Gerbil_Scanners.NetworkScanner.getDevices(yMod, timeout, xCount))
+                    {
+                        devices.Add(i);
+                    }
+                }
+            }
+            else
+            {
+                Out.writeln("Searching " + subnet + " subnet...");
+                int xCount = maxAddressField('x', subnet);
+                subnet = replaceFirst('x', subnet);
+
+                foreach (string i in Gerbil_Scanners.NetworkScanner.getDevices(subnet, timeout, xCount))
+                {
+                    devices.Add(i);
+                }
+            }
+            
             // Loop system scan on all responding systems
             foreach(string address in devices)
             {
@@ -73,7 +160,8 @@ namespace Gerbil
                     Out.writeln("NETBIOS Name: " + devName);
                 }
                 // Forward found services to the AI engine and get server OS
-                Gerbil_Engine.OSResult osr = Gerbil_Engine.GerbilRunner.guessOS(openServices);
+                //TODO: forward training mode parameter
+                Gerbil_Engine.NetworkResult osr = Gerbil_Engine.GerbilRunner.guessOS(openServices, true);
                 float ct = osr.getCertainty();
                 ct = ct * 1000.0f;
                 Out.writeln("OS Guess: " + osr.getName());
@@ -132,7 +220,8 @@ namespace Gerbil
                 Out.writeln("NETBIOS Name: " + devName);
             }
             // Forward found services to the AI engine and get server OS
-            Gerbil_Engine.OSResult osr = Gerbil_Engine.GerbilRunner.guessOS(openServices);
+            //TODO: forward training parameter
+            Gerbil_Engine.NetworkResult osr = Gerbil_Engine.GerbilRunner.guessOS(openServices, true);
             float ct = osr.getCertainty();
             ct = ct * 10.0f;
             Out.writeln("OS Guess: " + osr.getName());
