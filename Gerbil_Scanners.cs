@@ -117,6 +117,14 @@ namespace Gerbil
                 }
                 return devices.ToArray();
             }
+            private static void isLocalAddress(string ipAddress)
+            {
+                //IP comparison
+            }
+            private static void isLocalAddress(IPAddress ipAddress)
+            {
+                //IP comparison
+            }
         }
     }
 }
