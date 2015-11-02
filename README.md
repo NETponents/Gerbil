@@ -32,6 +32,9 @@ Gerbil uses a custom CLI. See the project wiki on the right-hand side for CLI co
 
 [Read more >](http://github.com/NETponents/Gerbil/wiki/CLI-Commands)
 
+## Helpful addons
+- [GerbilBRCS](https://github.com/NETponents/GerbilBRCService): Remote control software for large-scale Gerbil attack
+
 ## Want to contribute?
 
 See our [contributing guidelines](http://github.com/NETponents/Gerbil/tree/dev/CONTRIBUTING.md).
