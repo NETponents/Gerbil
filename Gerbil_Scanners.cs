@@ -117,13 +117,50 @@ namespace Gerbil
                 }
                 return devices.ToArray();
             }
-            private static void isLocalAddress(string ipAddress)
+            private static bool isLocalAddress(string ipAddress)
             {
                 //IP comparison
+                bool result = false;
+                //IP comparison
+                String strHostName = string.Empty;
+                // Getting Ip address of local machine...
+                // First get the host name of local machine.
+                strHostName = Dns.GetHostName();
+                Console.WriteLine("Local Machine's Host Name: " + strHostName);
+                // Then using host name, get the IP address list..
+                IPHostEntry ipEntry = Dns.GetHostEntry(strHostName);
+                IPAddress[] addr = ipEntry.AddressList;
+
+                for (int i = 0; i < addr.Length; i++)
+                {
+                    if(addr[i].ToString() == ipAddress)
+                    {
+                        result = true;
+                    }
+                }
+                return result;
             }
-            private static void isLocalAddress(IPAddress ipAddress)
+            private static bool isLocalAddress(IPAddress ipAddress)
             {
+                bool result = false;
                 //IP comparison
+                String strHostName = string.Empty;
+                // Getting Ip address of local machine...
+                // First get the host name of local machine.
+                strHostName = Dns.GetHostName();
+                Console.WriteLine("Local Machine's Host Name: " + strHostName);
+                // Then using host name, get the IP address list..
+                IPHostEntry ipEntry = Dns.GetHostEntry(strHostName);
+                IPAddress[] addr = ipEntry.AddressList;
+
+                for (int i = 0; i < addr.Length; i++)
+                {
+                    if(addr[i] == ipAddress)
+                    {
+                        result = true;
+                    }
+                }
+                return result;
             }
         }
     }
