@@ -134,10 +134,10 @@ build:
 #      artifacts configuration    #
 #---------------------------------#
 
-artifacts:
-
-  # pushing a single file
-  - path: bin
+#artifacts:
+#
+#  # pushing a single file
+#  - path: bin
 
 #---------------------------------#
 #     deployment configuration    #
