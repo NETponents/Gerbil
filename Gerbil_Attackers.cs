@@ -78,6 +78,48 @@ namespace Gerbil
                 }
             }
         }
+        public class HTTPAuthAttacker : Attacker
+        {
+            private string target;
+            private PasswordServices.SimplePasswordCracker cracker;
+            
+            public HTTPAuthAttacker(string targetURI, int maxCrackLength)
+                : base()
+            {
+                target = targetURI;
+                cracker = new PasswordServices.SimplePasswordCracker(maxCrackLength);
+            }
+            public override AttackerResult stab()
+            {
+                bool authSuccessful = false;
+                try
+                {
+                    string password = cracker.getNextKey();
+                }
+                catch (PasswordTableExhaustedException e)
+                {
+                    return AttackerResult.FailedAuth;
+                }
+                // Plug in and find result
+                if(authSuccessful)
+                {
+                    return AttackerResult.Connected;
+                }
+                else
+                {
+                    return AttackerResult.Trying;
+                }
+            }
+            public string[] getAccessString()
+            {
+                // TODO: retrieve auth combo
+                // TODO: test to see if auth has succeeded
+                string[] result = new string[2];
+                result[0] = "Username";
+                result[1] = "Password";
+                return result;
+            }
+        }
         public class WoLAttacker : Attacker
         {
             private string MACaddress;
