@@ -7,6 +7,7 @@ using System.IO;
 using System.Net.Sockets;
 using System.Globalization;
 using System.Net;
+using Gerbil;
 
 namespace Gerbil
 {
@@ -113,7 +114,7 @@ namespace Gerbil
                     return AttackerResult.Trying;
                 }
             }
-            public string[] getAccessString()
+            public string getAccessString()
             {
                 return foundPassword;
             }
@@ -134,12 +135,21 @@ namespace Gerbil
                     {
                         return true;
                     }
+                    else
+                    {
+                        return false;
+                    }
                 }
                 catch (WebException ex)
                 {
                     if (((HttpWebResponse) ex.Response).StatusCode == HttpStatusCode.Unauthorized)
                     {
                         return false;
+                    }
+                    else
+                    {
+                        // TODO: Add new specific exception here
+                        throw new Exception();
                     }
                 }
             }
