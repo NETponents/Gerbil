@@ -99,7 +99,7 @@ namespace Gerbil
                 {
                     password = cracker.getNextKey();
                 }
-                catch (PasswordTableExhaustedException e)
+                catch (PasswordServices.PasswordTableExhaustedException e)
                 {
                     return AttackerResult.FailedAuth;
                 }

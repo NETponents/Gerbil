@@ -7,23 +7,23 @@ using System.Net;
 
   namespace Gerbil
   {
-    namespace Gerbil_PasswordServices
+    namespace PasswordServices
     {
       public class SimplePasswordCracker
       {
         private int charCtr = 31;
         private int maxCrackLength;
         private char[] passwordStorage = new char[1];
-        public SimpleAuthCracker(int maxLength)
+        public SimplePasswordCracker(int maxLength)
         {
           // Default constructor
-          passwordStorage[0] = 31;
+          passwordStorage[0] = (char)31;
           maxCrackLength = maxLength;
         }
         public string getNextKey()
         {
-          passwordStorage.increment();
-          if(passwordStorage > maxCrackLength)
+          increment();
+          if(passwordStorage.Length > maxCrackLength)
           {
             throw new PasswordTableExhaustedException();
           }
@@ -32,12 +32,12 @@ using System.Net;
         private void increment()
         {
           charCtr = (char)((int)charCtr + 1);
-          passwordStorage[passwordStorage.Length - 1] = charCtr;
+          passwordStorage[passwordStorage.Length - 1] = (char)charCtr;
           for(int i = passwordStorage.Length - 1; i >= 0; i--)
           {
             if((int)passwordStorage[i] > 126)
             {
-              passwordStorage[i] = 32;
+              passwordStorage[i] = (char)32;
               if(i > 0)
               {
                 passwordStorage[i - 1] = (char)((int)passwordStorage[i - 1] + 1);
@@ -52,7 +52,7 @@ using System.Net;
         private void extendStringLength()
         {
           passwordStorage = new char[passwordStorage.Length + 1];
-          for(int i = 0; i < passwordStorage.length; i++)
+          for(int i = 0; i < passwordStorage.Length; i++)
           {
             passwordStorage[i] = (char)(32);
           }
