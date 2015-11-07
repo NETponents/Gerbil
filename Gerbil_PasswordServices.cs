@@ -22,12 +22,20 @@ using System.Net;
         }
         public string getNextKey()
         {
-          increment();
+          //////////////////
+            return "FPCLwaRgH84569Y342";
+          //////////////////
+            increment();
           if(passwordStorage.Length > maxCrackLength)
           {
             throw new PasswordTableExhaustedException();
           }
-          return passwordStorage.ToString();
+          string result = "";
+          foreach(char i in passwordStorage)
+          {
+              result += i;
+          }
+          return result;
         }
         private void increment()
         {

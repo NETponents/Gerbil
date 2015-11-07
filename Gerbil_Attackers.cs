@@ -103,7 +103,7 @@ namespace Gerbil
                 {
                     return AttackerResult.FailedAuth;
                 }
-                authSuccessful = httpLogin(target, "", password);
+                authSuccessful = httpLogin("http://" + target, "", password);
                 if(authSuccessful)
                 {
                     foundPassword = password;
@@ -123,26 +123,15 @@ namespace Gerbil
                 // create request
                 var request = (HttpWebRequest)WebRequest.Create(url);
                 request.Credentials = new NetworkCredential(username, password);
-
+                WebResponse response;
                 try
                 {
                     // get response
-                    var response = (HttpWebResponse)request.GetResponse();
-                    var statusCode = response.StatusCode;
-
-                    // verify response
-                    if (statusCode == HttpStatusCode.OK)
-                    {
-                        return true;
-                    }
-                    else
-                    {
-                        return false;
-                    }
+                    response = (HttpWebResponse)request.GetResponse();
                 }
                 catch (WebException ex)
                 {
-                    if (((HttpWebResponse) ex.Response).StatusCode == HttpStatusCode.Unauthorized)
+                    if (((HttpWebResponse)ex.Response).StatusCode == HttpStatusCode.Unauthorized)
                     {
                         return false;
                     }
@@ -152,6 +141,32 @@ namespace Gerbil
                         throw new Exception();
                     }
                 }
+                //TODO: Get proper response header code name.
+                var statusCode = response.Headers.Get("ResponseCode");
+                    bool isForbidden = false;
+                    string rBody = new StreamReader(response.GetResponseStream()).ReadToEnd();
+                    //string hBody = response.GetResponseHeader();
+                    /////////////////////////////
+                    Gerbil_IO.Out.writeln(rBody);
+                    /////////////////////////////
+                    if (rBody.Contains("403"))
+                    {
+                        isForbidden = true;
+                    }
+                    //if (hBody.Contains("403"))
+                    //{
+                    //    isForbidden = false;
+                    //}
+
+                    // verify response
+                    if (statusCode == HttpStatusCode.OK && !isForbidden)
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
             }
         }
         public class WoLAttacker : Attacker

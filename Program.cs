@@ -104,7 +104,8 @@ namespace Gerbil
                 case 2:
                     string ip2 = In.prompt<string>("Target IP address");
                     int port = In.prompt<int>("Target port");
-                    Pathfinder.begin(ip2, port);
+                    int timeout5 = In.prompt<int>("Max timeout for ping");
+                    Pathfinder.begin(ip2, port, timeout5);
                     break;
                 case 3:
                     string ip3 = In.prompt<string>("Target IP address");

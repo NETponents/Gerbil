@@ -170,9 +170,38 @@ namespace Gerbil
                 // HTTP
                 if(openServices.Contains("HTTP"))
                 {
-
+                    // Attempt an HTTP attack
+                    if(Gerbil_IO.In.securePrompt("Pathfinder", "HTTP Auth Password Crack"))
+                    {
+                        int pLength = Gerbil_IO.In.prompt<int>("Maximum length of password");
+                        Gerbil_IO.Out.writeln("Cracking password...");
+                        Gerbil.Attackers.HTTPAuthAttacker HAA = new Attackers.HTTPAuthAttacker(address, pLength);
+                        while(true)
+                        {
+                            Gerbil_IO.Out.write("*");
+                            Gerbil.Attackers.AttackerResult AR;
+                            try
+                            {
+                                AR = HAA.stab();
+                            }
+                            catch
+                            {
+                                // Error occured, break.
+                                break;
+                            }
+                            if(AR == Attackers.AttackerResult.Trying)
+                            {
+                                // Continue
+                            }
+                            else if(AR == Attackers.AttackerResult.Connected)
+                            {
+                                Gerbil_IO.Out.blank();
+                                Gerbil_IO.Out.writeln(String.Format("CRACKED: Password is \"{0}\".", HAA.getAccessString()));
+                                break;
+                            }
+                        }
+                    }
                 }
-                // Launch attacks
             }
         }
         /// <summary>
@@ -230,7 +259,37 @@ namespace Gerbil
             // HTTP
             if (openServices.Contains("HTTP"))
             {
-
+                // Attempt an HTTP attack
+                if (Gerbil_IO.In.securePrompt("Pathfinder", "HTTP Auth Password Crack"))
+                {
+                    int pLength = Gerbil_IO.In.prompt<int>("Maximum length of password");
+                    Gerbil_IO.Out.writeln("Cracking password...");
+                    Gerbil.Attackers.HTTPAuthAttacker HAA = new Attackers.HTTPAuthAttacker(ipAddress, pLength);
+                    while (true)
+                    {
+                        Gerbil_IO.Out.write("*");
+                        Gerbil.Attackers.AttackerResult AR;
+                        try
+                        {
+                            AR = HAA.stab();
+                        }
+                        catch(Exception e)
+                        {
+                            // Error occured, break.
+                            break;
+                        }
+                        if (AR == Attackers.AttackerResult.Trying)
+                        {
+                            // Continue
+                        }
+                        else if (AR == Attackers.AttackerResult.Connected)
+                        {
+                            Gerbil_IO.Out.blank();
+                            Gerbil_IO.Out.writeln(String.Format("CRACKED: Password is \"{0}\".", HAA.getAccessString()));
+                            break;
+                        }
+                    }
+                }
             }
             // Launch attacks
         }
@@ -243,11 +302,11 @@ namespace Gerbil
         {
             // Scan device for open ports
             Out.writeln("Probing port...");
-            if (Gerbil_Scanners.PortScanner.scan(ipAddress, port, timeout))
+            /*if (Gerbil_Scanners.PortScanner.scan(ipAddress, port, timeout))
             {
                 Out.writeln("No open ports found for the specified host and port range.");
                 return;
-            }
+            }*****/
             // Get list of services
             Out.writeln("Looking up port definitions...");
             int[] openPorts = { port };
@@ -267,6 +326,41 @@ namespace Gerbil
             }
             // Generate server information using AI engine
             // Finalize using SNMP
+            // HTTP
+            if (openServices.Contains("HTTP"))
+            {
+                // Attempt an HTTP attack
+                if (Gerbil_IO.In.securePrompt("Pathfinder", "HTTP Auth Password Crack"))
+                {
+                    int pLength = Gerbil_IO.In.prompt<int>("Maximum length of password");
+                    Gerbil_IO.Out.writeln("Cracking password...");
+                    Gerbil.Attackers.HTTPAuthAttacker HAA = new Attackers.HTTPAuthAttacker(ipAddress, pLength);
+                    while (true)
+                    {
+                        Gerbil_IO.Out.write("*");
+                        Gerbil.Attackers.AttackerResult AR;
+                        try
+                        {
+                            AR = HAA.stab();
+                        }
+                        catch (Exception e)
+                        {
+                            // Error occured, break.
+                            break;
+                        }
+                        if (AR == Attackers.AttackerResult.Trying)
+                        {
+                            // Continue
+                        }
+                        else if (AR == Attackers.AttackerResult.Connected)
+                        {
+                            Gerbil_IO.Out.blank();
+                            Gerbil_IO.Out.writeln(String.Format("CRACKED: Password is \"{0}\".", HAA.getAccessString()));
+                            break;
+                        }
+                    }
+                }
+            }
             // Launch attacks
         }
         /// <summary>
@@ -310,6 +404,41 @@ namespace Gerbil
             }
             // Generate server information using AI engine
             // Finalize using SNMP
+            // HTTP
+            if (openServices.Contains("HTTP"))
+            {
+                // Attempt an HTTP attack
+                if (Gerbil_IO.In.securePrompt("Pathfinder", "HTTP Auth Password Crack"))
+                {
+                    int pLength = Gerbil_IO.In.prompt<int>("Maximum length of password");
+                    Gerbil_IO.Out.writeln("Cracking password...");
+                    Gerbil.Attackers.HTTPAuthAttacker HAA = new Attackers.HTTPAuthAttacker(ipAddress, pLength);
+                    while (true)
+                    {
+                        Gerbil_IO.Out.write("*");
+                        Gerbil.Attackers.AttackerResult AR;
+                        try
+                        {
+                            AR = HAA.stab();
+                        }
+                        catch (Exception e)
+                        {
+                            // Error occured, break.
+                            break;
+                        }
+                        if (AR == Attackers.AttackerResult.Trying)
+                        {
+                            // Continue
+                        }
+                        else if (AR == Attackers.AttackerResult.Connected)
+                        {
+                            Gerbil_IO.Out.blank();
+                            Gerbil_IO.Out.writeln(String.Format("CRACKED: Password is \"{0}\".", HAA.getAccessString()));
+                            break;
+                        }
+                    }
+                }
+            }
             // Launch attacks
         }
         /// <summary>
