@@ -86,6 +86,9 @@ configuration:
   - Debug
   - Release
 
+before_build:
+  - nuget restore
+
 build:
   parallel: true                  # enable MSBuild parallel builds
   project: Gerbil.sln      # path to Visual Studio solution or project
@@ -122,7 +125,12 @@ build:
 #  - ps: Write-Host "script1"
 
 # scripts to run after tests
-#after_test:
+after_test: 
+    - .\packages\OpenCover.4.6.166\tools\OpenCover.Console.exe -register:user -target:"C:\Program Files (x86)\Microsoft Visual Studio 12.0\Common7\IDE\MSTest.exe" -targetargs:"/noresults /noisolation /testcontainer:"".\GerbilTest\bin\Debug\GerbilTest.dll" -filter:"" -excludebyattribute:*.ExcludeFromCodeCoverage* -hideskipped:All -output:.\MyProject_coverage.xml
+    - "SET PATH=C:\\Python34;C:\\Python34\\Scripts;%PATH%"
+    - pip install codecov
+    - codecov -f "MyProject_coverage.xml" -t "43fa8e8a-43eb-4e4c-a63e-6d4602b1263f"
+#    - codecov
 # to run your custom scripts instead of automatic tests
 #test_script:
 
@@ -134,10 +142,10 @@ build:
 #      artifacts configuration    #
 #---------------------------------#
 
-artifacts:
-
-  # pushing a single file
-  - path: bin
+#artifacts:
+#
+#  # pushing a single file
+#  - path: bin
 
 #---------------------------------#
 #     deployment configuration    #

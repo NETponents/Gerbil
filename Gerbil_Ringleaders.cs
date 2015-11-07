@@ -77,7 +77,7 @@ namespace Gerbil
                 public DumbRouterRingleader(string target)
                     : base(target)
                 {
-
+                    // TODO: probe router to confirm that it exists
                 }
                 /// <summary>
                 /// Public constructor for DumbRouterRingleader class
@@ -86,11 +86,12 @@ namespace Gerbil
                 public DumbRouterRingleader(IPAddress target)
                     : base(target)
                 {
-
+                    // TODO: probe router to confirm that it exists
                 }
                 public override int Attack(params string[] args)
                 {
-                    
+                    // TODO: comb HTTP response
+                    // TODO: Initialize password cracker
                     return base.Attack(args);
                 }
             }
