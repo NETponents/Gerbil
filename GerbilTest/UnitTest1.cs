@@ -24,7 +24,7 @@ namespace GerbilTest
         {
             Gerbil.Gerbil_PortServices.PortLookup.initServices();
             int[] testPorts = { 80 };
-            Assert.Equals(Gerbil.Gerbil_PortServices.PortLookup.getServices(testPorts)[0], "HTTP");
+            Assert.AreEqual(Gerbil.Gerbil_PortServices.PortLookup.getServices(testPorts)[0], "HTTP");
             Gerbil.Gerbil_PortServices.PortLookup.createService("TestService", 5000);
             Gerbil.Gerbil_PortServices.PortLookup.removeService("TestService", 5000);
             Gerbil.Gerbil_PortServices.PortLookup.launch("add", "TestService", "5000");
