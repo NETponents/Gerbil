@@ -25,24 +25,24 @@ namespace Gerbil
         };
         public class AttackerNotInitializedException : Exception
         {
-            
+
         }
         public class AttackerNoTargetFoundException : Exception
         {
-            
+
         }
         public class AttackerAttemptsExhaustedException : Exception
         {
-            
+
         }
         public class AttackerAlreadyPenetratedException : Exception
         {
-            
+
         }
         public partial class Attacker
         {
             protected AttackerResult attackerStatus;
-            
+
             /// <summary>
             /// Constructor for Attacker class
             /// </summary>
@@ -69,11 +69,11 @@ namespace Gerbil
             /// </summary>
             public virtual void clean()
             {
-                if(attackerStatus == AttackerResult.Created)
+                if (attackerStatus == AttackerResult.Created)
                 {
                     throw new AttackerNotInitializedException();
                 }
-                else if(attackerStatus ==  AttackerResult.FailedConnection)
+                else if (attackerStatus == AttackerResult.FailedConnection)
                 {
                     throw new AttackerNoTargetFoundException();
                 }
@@ -84,7 +84,7 @@ namespace Gerbil
             private string target;
             private string foundPassword;
             private PasswordServices.SimplePasswordCracker cracker;
-            
+
             public HTTPAuthAttacker(string targetURI, int maxCrackLength)
                 : base()
             {
@@ -104,7 +104,7 @@ namespace Gerbil
                     return AttackerResult.FailedAuth;
                 }
                 authSuccessful = httpLogin("http://" + target, "", password);
-                if(authSuccessful)
+                if (authSuccessful)
                 {
                     foundPassword = password;
                     return AttackerResult.Connected;
@@ -143,30 +143,30 @@ namespace Gerbil
                 }
                 //TODO: Get proper response header code name.
                 var statusCode = response.Headers.Get("ResponseCode");
-                    bool isForbidden = false;
-                    string rBody = new StreamReader(response.GetResponseStream()).ReadToEnd();
-                    //string hBody = response.GetResponseHeader();
-                    /////////////////////////////
-                    Gerbil_IO.Out.writeln(rBody);
-                    /////////////////////////////
-                    if (rBody.Contains("403"))
-                    {
-                        isForbidden = true;
-                    }
-                    //if (hBody.Contains("403"))
-                    //{
-                    //    isForbidden = false;
-                    //}
+                bool isForbidden = false;
+                string rBody = new StreamReader(response.GetResponseStream()).ReadToEnd();
+                //string hBody = response.GetResponseHeader();
+                /////////////////////////////
+                Gerbil_IO.Out.writeln(rBody);
+                /////////////////////////////
+                if (rBody.Contains("403"))
+                {
+                    isForbidden = true;
+                }
+                //if (hBody.Contains("403"))
+                //{
+                //    isForbidden = false;
+                //}
 
-                    // verify response
-                    if (statusCode == HttpStatusCode.OK && !isForbidden)
-                    {
-                        return true;
-                    }
-                    else
-                    {
-                        return false;
-                    }
+                // verify response
+                if (statusCode == HttpStatusCode.OK && !isForbidden)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
             }
         }
         public class WoLAttacker : Attacker
@@ -182,9 +182,9 @@ namespace Gerbil
             {
                 //Send network adapter MAC address over UDP 16 times
                 // Prep input parameters
-                if(MACaddress.Contains(':'))
+                if (MACaddress.Contains(':'))
                 {
-                    MACaddress = MACaddress.Replace(":","");
+                    MACaddress = MACaddress.Replace(":", "");
                 }
                 ///////////////////////////////////////////////////////////////////////
                 // Segments of code were copied from:                                //
@@ -219,16 +219,17 @@ namespace Gerbil
                 return attackerStatus;
             }
             //we derive our class from a standard one
-            private class WOLClass : UdpClient    
+            private class WOLClass : UdpClient
             {
-                public WOLClass():base()
+                public WOLClass()
+                    : base()
                 { }
                 //this is needed to send broadcast packet
-                public void SetClientToBrodcastMode()    
+                public void SetClientToBrodcastMode()
                 {
-                    if(this.Active)
+                    if (this.Active)
                         this.Client.SetSocketOption(SocketOptionLevel.Socket,
-                            SocketOptionName.Broadcast,0);
+                            SocketOptionName.Broadcast, 0);
                 }
             }
             //now use this class
