@@ -86,6 +86,9 @@ configuration:
   - Debug
   - Release
 
+before_build:
+  - nuget restore
+
 build:
   parallel: true                  # enable MSBuild parallel builds
   project: Gerbil.sln      # path to Visual Studio solution or project
