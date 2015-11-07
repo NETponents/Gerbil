@@ -283,7 +283,7 @@ namespace Gerbil
         /// <summary>
         /// Base network class
         /// </summary>
-        class Network
+        public class Network
         {
             public static Random rd = new Random();
 
