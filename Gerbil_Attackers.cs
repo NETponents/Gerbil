@@ -120,10 +120,16 @@ namespace Gerbil
             }
             private bool httpLogin(string url, string username, string password)
             {
-                // create request
-                var request = (HttpWebRequest)WebRequest.Create(url);
+                HttpWebRequest request = (HttpWebRequest)HttpWebRequest.Create(url);
+
+                request.Method = "GET";
+                request.UseDefaultCredentials = false;
+                request.PreAuthenticate = true;
+                request.UserAgent = "netscape11";
                 request.Credentials = new NetworkCredential(username, password);
-                WebResponse response;
+                request.Headers.Add("Authorization", "Basic " + Convert.ToBase64String(new ASCIIEncoding().GetBytes(username + ":" + password)));
+                // create request
+                HttpWebResponse response;
                 try
                 {
                     // get response
@@ -141,25 +147,20 @@ namespace Gerbil
                         throw new Exception();
                     }
                 }
-                //TODO: Get proper response header code name.
-                var statusCode = response.Headers.Get("ResponseCode");
                 bool isForbidden = false;
                 string rBody = new StreamReader(response.GetResponseStream()).ReadToEnd();
                 //string hBody = response.GetResponseHeader();
-                /////////////////////////////
-                Gerbil_IO.Out.writeln(rBody);
-                /////////////////////////////
-                if (rBody.Contains("403"))
+                if (rBody.Contains("401"))
                 {
                     isForbidden = true;
                 }
-                //if (hBody.Contains("403"))
+                //if (hBody.Contains("401"))
                 //{
                 //    isForbidden = false;
                 //}
 
                 // verify response
-                if (statusCode == HttpStatusCode.OK && !isForbidden)
+                if (response.StatusCode == HttpStatusCode.OK && !isForbidden)
                 {
                     return true;
                 }

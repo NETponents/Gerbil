@@ -193,6 +193,11 @@ namespace Gerbil
                             {
                                 // Continue
                             }
+                            else if (AR == Attackers.AttackerResult.FailedAuth || AR == Attackers.AttackerResult.FailedConnection)
+                            {
+                                Out.writeln("\nFailed to crack password using given parameters.");
+                                break;
+                            }
                             else if(AR == Attackers.AttackerResult.Connected)
                             {
                                 Gerbil_IO.Out.blank();
@@ -282,6 +287,11 @@ namespace Gerbil
                         {
                             // Continue
                         }
+                        else if(AR == Attackers.AttackerResult.FailedAuth || AR == Attackers.AttackerResult.FailedConnection)
+                        {
+                            Out.writeln("\nFailed to crack password using given parameters.");
+                            break;
+                        }
                         else if (AR == Attackers.AttackerResult.Connected)
                         {
                             Gerbil_IO.Out.blank();
@@ -351,6 +361,11 @@ namespace Gerbil
                         if (AR == Attackers.AttackerResult.Trying)
                         {
                             // Continue
+                        }
+                        else if (AR == Attackers.AttackerResult.FailedAuth || AR == Attackers.AttackerResult.FailedConnection)
+                        {
+                            Out.writeln("\nFailed to crack password using given parameters.");
+                            break;
                         }
                         else if (AR == Attackers.AttackerResult.Connected)
                         {
@@ -429,6 +444,11 @@ namespace Gerbil
                         if (AR == Attackers.AttackerResult.Trying)
                         {
                             // Continue
+                        }
+                        else if (AR == Attackers.AttackerResult.FailedAuth || AR == Attackers.AttackerResult.FailedConnection)
+                        {
+                            Out.writeln("\nFailed to crack password using given parameters.");
+                            break;
                         }
                         else if (AR == Attackers.AttackerResult.Connected)
                         {
