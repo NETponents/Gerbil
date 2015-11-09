@@ -61,7 +61,7 @@ namespace GerbilTest
         {
             string filepath = Path.Combine(Environment.ExpandEnvironmentVariables("%userprofile%"), "Documents", "Gerbil", "memstore", "OSServiceTraining.ini");
             string[] filecontents = { "RDP=Windows", "SSH=Linux", "HTTP=Windows" };
-            string[] services = { "HTTP", "RDP", "ISCSI" };
+            string[] services = { "HTTP", "RDP" };
             System.IO.File.WriteAllLines(filepath, filecontents);
             Gerbil.Gerbil_Engine.GerbilRunner.guessOS(services, false);
             Gerbil.Gerbil_Engine.GerbilRunner.guessHTTPService();
