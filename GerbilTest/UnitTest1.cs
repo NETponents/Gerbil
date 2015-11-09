@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Net;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Gerbil;
 
@@ -40,6 +41,12 @@ namespace GerbilTest
             Assert.AreEqual(db.Read(db.getAllIDs()[0]), 1);
             db.Update(db.getAllIDs()[0], 2);
             db.Delete(db.getAllIDs()[0]);
+        }
+        [TestMethod]
+        public void TestScanners()
+        {
+            IPAddress me = IPAddress.Loopback;
+            Gerbil.AttackMethods.begin(me.ToString(), 85, 1000);
         }
     }
 }

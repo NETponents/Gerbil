@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Gerbil
 {
-    class AttackMethods
+    public class AttackMethods
     {
         private static int maxAddressField(char placeholder, string subnet)
         {
