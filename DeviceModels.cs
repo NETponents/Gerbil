@@ -7,7 +7,7 @@ using System.Net;
 
 namespace Gerbil
 {
-    namespace Gerbil_DataService
+    namespace Data
     {
         namespace Models
         {
@@ -16,7 +16,7 @@ namespace Gerbil
                 /// <summary>
                 /// Partial data model to represent a discoverable device connected to the network.
                 /// </summary>
-                public partial class Device
+                public class Device
                 {
                     private SecurityLevel machineSecurityRel;
                     private string networkName;
@@ -134,38 +134,6 @@ namespace Gerbil
                     Router,
                     Client
                 };
-            }
-        }
-        namespace Databases
-        {
-            class dbOStoServices
-            {
-                private Dictionary<string, string[]> dataholder;
-
-                public dbOStoServices()
-                {
-                    dataholder = new Dictionary<string, string[]>();
-                }
-                public void insertRecord(string OSName, string[] activeServices)
-                {
-                    dataholder.Add(OSName, activeServices);
-                }
-                public string[][] getServicesForOS(string osName)
-                {
-                    List<string[]> serviceList = new List<string[]>();
-                    foreach(KeyValuePair<string,string[]> i in dataholder)
-                    {
-                        if(i.Key == osName)
-                        {
-                            serviceList.Add(i.Value);
-                        }
-                    }
-                    return serviceList.ToArray();
-                }
-                public Dictionary<string, string[]> getRawDB()
-                {
-                    return dataholder;
-                }
             }
         }
     }
