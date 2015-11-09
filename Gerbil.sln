@@ -1,9 +1,16 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.30501.0
+VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gerbil", "Gerbil.csproj", "{BE0426CD-233D-48A0-86BD-C5F186ABF6D5}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{09909234-8EFD-45DC-BE66-84C531133227}"
+	ProjectSection(SolutionItems) = preProject
+		.nuget\packages.config = .nuget\packages.config
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GerbilTest", "GerbilTest\GerbilTest.csproj", "{DC7BC4E2-DB21-4227-BCB4-3781C723D307}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +22,10 @@ Global
 		{BE0426CD-233D-48A0-86BD-C5F186ABF6D5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BE0426CD-233D-48A0-86BD-C5F186ABF6D5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BE0426CD-233D-48A0-86BD-C5F186ABF6D5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DC7BC4E2-DB21-4227-BCB4-3781C723D307}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DC7BC4E2-DB21-4227-BCB4-3781C723D307}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DC7BC4E2-DB21-4227-BCB4-3781C723D307}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DC7BC4E2-DB21-4227-BCB4-3781C723D307}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
