@@ -31,5 +31,15 @@ namespace GerbilTest
             Gerbil.Gerbil_PortServices.PortLookup.launch("remove", "TestService", "5000");
             Assert.IsNotNull(Gerbil.Gerbil_PortServices.PortLookup.getPorts());
         }
+        [TestMethod]
+        public void TestDatabaseService()
+        {
+            Gerbil.Data.Database<int> db = new Gerbil.Data.Database<int>("Test DB");
+            db.Create(1);
+            Assert.AreEqual(db.itemcount, 1);
+            Assert.AreEqual(db.Read(db.getAllIDs()[0]), 1);
+            db.Update(db.getAllIDs()[0], 2);
+            db.Delete(db.getAllIDs()[0]);
+        }
     }
 }

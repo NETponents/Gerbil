@@ -1,8 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Collections.Generic;
-using Gerbil.Gerbil_DataService;
-using Gerbil.Gerbil_DataService.Models.Devices;
+using Gerbil.IO;
 
 namespace Gerbil
 {
@@ -10,11 +9,10 @@ namespace Gerbil
     {
         class GerbilRunner
         {
-            private Device target;
 
-            public GerbilRunner(Device dTarget)
+            public GerbilRunner()
             {
-                target = dTarget;
+
             }
             public static NetworkResult guessOS(string[] foundServices, bool training)
             {
@@ -56,7 +54,7 @@ namespace Gerbil
                         if(training)
                         {
                             //TODO: Prompt for training input
-                            Gerbil_IO.Out.writeln("Unknown input service: " + i);
+                            Out.writeln("Unknown input service: " + i);
                         }
                         else
                         {

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Gerbil
 {
-    namespace Gerbil_IO
+    namespace IO
     {
         class Out
         {
