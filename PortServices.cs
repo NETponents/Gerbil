@@ -9,7 +9,7 @@ namespace Gerbil
 {
     namespace Gerbil_PortServices
     {
-        class PortLookup
+        public class PortLookup
         {
             /// <summary>
             /// Gets services found on specified active ports.
@@ -150,7 +150,7 @@ namespace Gerbil
             /// Gerbil service launcher handler method.
             /// </summary>
             /// <param name="args">Launch arguments.</param>
-            public static void launch(string[] args)
+            public static void launch(params string[] args)
             {
                 if(args[1] == "add")
                 {

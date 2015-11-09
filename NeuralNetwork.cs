@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Gerbil
 {
@@ -283,7 +280,7 @@ namespace Gerbil
         /// <summary>
         /// Base network class
         /// </summary>
-        class Network
+        public class Network
         {
             public static Random rd = new Random();
 

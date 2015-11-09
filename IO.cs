@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Gerbil
 {
-    namespace Gerbil_IO
+    namespace IO
     {
         class Out
         {
@@ -114,6 +114,25 @@ namespace Gerbil
                     {
                         Out.writeln("Invalid input. Please enter a valid input.");
                     }
+                }
+            }
+            /// <summary>
+            /// Prompts the user to perfom a dangerous or uncertain task.
+            /// </summary>
+            /// <param name="module">Name of module seeking permission.</param>
+            /// <param name="action">Action being taken by the module.</param>
+            /// <returns>Action allowed.</returns>
+            public static bool securePrompt(string module, string action)
+            {
+                Out.writeln(String.Format("GERBIL SECURITY: Module {0} is attempting to {1}.", module, action));
+                int result = menu("Allow action?", "Yes", "No");
+                if(result == 0)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
                 }
             }
         }
