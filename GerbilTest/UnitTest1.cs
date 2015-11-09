@@ -47,6 +47,7 @@ namespace GerbilTest
         {
             IPAddress me = IPAddress.Loopback;
             Gerbil.AttackMethods.begin(me.ToString(), 85, 1000);
+            Gerbil.AttackMethods.begin(me.ToString(), 85, 87, 1000);
         }
     }
 }
