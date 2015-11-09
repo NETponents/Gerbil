@@ -1,7 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Net;
-using System.Windows.Forms;
+//using System.Windows.Forms;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Gerbil;
 
@@ -51,11 +51,11 @@ namespace GerbilTest
             Gerbil.AttackMethods.begin(me.ToString(), 85, 1000);
             Gerbil.AttackMethods.begin(me.ToString(), 85, 87, 1000);
         }
-        [TestMethod]
-        public void TestGUI()
-        {
-            Gerbil.GerbilGui gui = new GerbilGui();
-        }
+        //[TestMethod]
+        //public void TestGUI()
+        //{
+        //    Gerbil.GerbilGui gui = new GerbilGui();
+        //}
         [TestMethod]
         public void TestEngine()
         {
