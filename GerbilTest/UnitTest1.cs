@@ -88,7 +88,7 @@ namespace GerbilTest
         {
             string pwd = "AA";
             string cpwd = "";
-            Gerbil.PasswordServices.SimplePasswordCracker pc = new Gerbil.PasswordServices.SimplePasswordCracker(3);
+            Gerbil.PasswordServices.SimplePasswordCracker pc = new Gerbil.PasswordServices.SimplePasswordCracker(4);
             while(cpwd != pwd)
             {
                 cpwd = pc.getNextKey();
@@ -101,7 +101,7 @@ namespace GerbilTest
                 {
                     pc2.getNextKey();
                 }
-                catch
+                catch(Gerbil.PasswordServices.PasswordTableExhaustedException e)
                 {
                     hasFailed = true;
                 }
