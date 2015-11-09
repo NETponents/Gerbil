@@ -41,13 +41,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Gerbil_Attackers.cs" />
-    <Compile Include="Gerbil_DataService.cs" />
-    <Compile Include="Gerbil_Engine.cs" />
-    <Compile Include="Gerbil_IO.cs" />
-    <Compile Include="Gerbil_PasswordServices.cs" />
-    <Compile Include="Gerbil_Ringleaders.cs" />
-    <Compile Include="Gerbil_Scanners.cs" />
+    <Compile Include="Attackers.cs" />
+    <Compile Include="DataService.cs" />
+    <Compile Include="Engine.cs" />
+    <Compile Include="IO.cs" />
+    <Compile Include="PasswordServices.cs" />
+    <Compile Include="Ringleaders.cs" />
+    <Compile Include="Scanners.cs" />
     <Compile Include="NeuralNetwork.cs" />
     <Compile Include="Pathfinder.cs" />
     <Compile Include="PortServices.cs" />
