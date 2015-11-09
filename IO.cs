@@ -9,7 +9,7 @@ namespace Gerbil
 {
     namespace IO
     {
-        class Out
+        public class Out
         {
             /// <summary>
             /// Writes a line of text to the CLI.
@@ -59,7 +59,7 @@ namespace Gerbil
                 }
             }
         }
-        class In
+        public class In
         {
             /// <summary>
             /// Prompts the user for input using a formatted graphical menu.

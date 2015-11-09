@@ -86,7 +86,7 @@ namespace GerbilTest
         [TestMethod]
         public void TestPasswordCracker()
         {
-            string pwd = "AA";
+            string pwd = "55";
             string cpwd = "";
             Gerbil.PasswordServices.SimplePasswordCracker pc = new Gerbil.PasswordServices.SimplePasswordCracker(4);
             while(cpwd != pwd)
