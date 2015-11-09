@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Net;
+using System.Windows.Forms.Form;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Gerbil;
 
