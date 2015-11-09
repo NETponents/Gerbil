@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Net;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Gerbil;
@@ -48,6 +49,38 @@ namespace GerbilTest
             IPAddress me = IPAddress.Loopback;
             Gerbil.AttackMethods.begin(me.ToString(), 85, 1000);
             Gerbil.AttackMethods.begin(me.ToString(), 85, 87, 1000);
+        }
+        [TestMethod]
+        public void TestGUI()
+        {
+            Gerbil.GerbilGui gui = new GerbilGui();
+        }
+        [TestMethod]
+        public void TestEngine()
+        {
+            string filepath = Path.Combine(Environment.ExpandEnvironmentVariables("%userprofile%"), "Documents", "Gerbil", "memstore", "OSServiceTraining.ini");
+            string[] filecontents = { "RDP=Windows", "SSH=Linux", "HTTP=Windows" };
+            string[] services = { "HTTP", "RDP", "ISCSI" };
+            System.IO.File.WriteAllLines(filepath, filecontents);
+            Gerbil.Gerbil_Engine.GerbilRunner.guessOS(services, false);
+            Gerbil.Gerbil_Engine.GerbilRunner.guessHTTPService();
+        }
+        [TestMethod]
+        public void TestAttackers()
+        {
+            Gerbil.Attackers.Attacker a = new Gerbil.Attackers.Attacker();
+            a.init();
+            a.stab();
+            a.clean();
+            try
+            {
+                new Gerbil.Attackers.HTTPAuthAttacker(IPAddress.Loopback.ToString(), 1).stab();
+            }
+            catch
+            {
+                // This is just to make the test not fail
+            }
+            new Gerbil.Attackers.WoLAttacker("00:00:00:00:00:00").stab();
         }
     }
 }

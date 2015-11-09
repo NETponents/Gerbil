@@ -7,7 +7,7 @@ namespace Gerbil
 {
     namespace Gerbil_Engine
     {
-        class GerbilRunner
+        public class GerbilRunner
         {
 
             public GerbilRunner()
@@ -114,7 +114,7 @@ namespace Gerbil
                 return result;
             }
         }
-        struct NetworkResult
+        public struct NetworkResult
         {
             private string itemName;
             private float certainty;
