@@ -12,13 +12,13 @@ namespace Gerbil
         /// <param name="args">Command line arguments.</param>
         static void Main(string[] args)
         {
-            Out.writeln("Gerbil v0.1.0 Alpha");
-            Out.writeln("Copyright 2015 under the GPL V3 License");
-            Out.writeln("NETponents or its authors assume no responsibility for this program or its actions.");
-            Out.writeln("Starting up...");
+            Out.writeln("CLI", "Gerbil v0.1.0 Alpha");
+            Out.writeln("CLI", "Copyright 2015 under the GPL V3 License");
+            Out.writeln("CLI", "NETponents or its authors assume no responsibility for this program or its actions.");
+            Out.writeln("CLI", "Starting up...");
             if (Directory.Exists(Path.Combine(Environment.ExpandEnvironmentVariables("%userprofile%"), "Documents", "Gerbil")))
             {
-                Out.writeln("Found AI temp storage folder.");
+                Out.writeln("CLI", "Found AI temp storage folder.");
             }
             else
             {
@@ -61,24 +61,24 @@ namespace Gerbil
                     startAttack();
                     break;
                 case "help":
-                    Out.writeln("Common Gerbil CLI commands:");
-                    Out.writeln("'start' - Switch program from CLI to attack mode.");
-                    Out.writeln("'config' - NOT IMPLEMENTED.");
-                    Out.writeln("'portservice add|remove SERVICE PORTNUMBER' - Adds or removes services to the port conversion dictionary.");
-                    Out.writeln("'portservice restore' - Resets the port conversion dictionary to it's default listings.");
-                    Out.writeln("'about' - Prints information about current instance of Gerbil.");
-                    Out.writeln("'attack ipaddress attacktype' - Attacks a device using a specific attack mode. (NOT RECOMMENDED)");
-                    Out.writeln("'exit' - Closes the Gerbil CLI.");
+                    Out.writeln("Help", "Common Gerbil CLI commands:");
+                    Out.writeln("Help", "'start' - Switch program from CLI to attack mode.");
+                    Out.writeln("Help", "'config' - NOT IMPLEMENTED.");
+                    Out.writeln("Help", "'portservice add|remove SERVICE PORTNUMBER' - Adds or removes services to the port conversion dictionary.");
+                    Out.writeln("Help", "'portservice restore' - Resets the port conversion dictionary to it's default listings.");
+                    Out.writeln("Help", "'about' - Prints information about current instance of Gerbil.");
+                    Out.writeln("Help", "'attack ipaddress attacktype' - Attacks a device using a specific attack mode. (NOT RECOMMENDED)");
+                    Out.writeln("Help", "'exit' - Closes the Gerbil CLI.");
                     break;
                 case "about":
-                    Out.writeln("Gerbil v0.0.1 alpha");
-                    Out.writeln("Development release");
-                    Out.writeln("Engine: Gerbil v0.1a");
-                    Out.writeln("Version: GitHub DRv0.0.1a");
-                    Out.writeln("Copyright 2015 NETponents under GPL V3 License.");
+                    Out.writeln("About", "Gerbil v0.0.1 alpha");
+                    Out.writeln("About", "Development release");
+                    Out.writeln("About", "Engine: Gerbil v0.1a");
+                    Out.writeln("About", "Version: GitHub DRv0.0.1a");
+                    Out.writeln("About", "Copyright 2015 NETponents under GPL V3 License.");
                     break;
                 default:
-                    Out.writeln("ERROR: Command not found.");
+                    Out.writeln("CLI", "ERROR: Command not found.");
                     break;
             }
         }
@@ -121,10 +121,10 @@ namespace Gerbil
                     AttackMethods.begin(ip4, porta2, portb2, timeout4, true);
                     break;
                 case 5:
-                    Out.writeln("Attack canceled.");
+                    Out.writeln("Attack Launcher", "Attack canceled.");
                     break;
                 default:
-                    Out.writeln("ERROR: Unrecognized option.");
+                    Out.writeln("Attack Launcher", "ERROR: Unrecognized option.");
                     break;
             }
         }
