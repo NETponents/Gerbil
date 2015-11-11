@@ -7,7 +7,7 @@ mono:
   - 3.8.0
 install:
   - nuget restore Gerbil.sln
-build:
-  - ./scripts/build.sh
-test:
-  - ./scripts/test.sh
+#build:
+#  - ./scripts/build.sh
+#test:
+#  - ./scripts/test.sh
