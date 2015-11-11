@@ -1,0 +1,13 @@
+language: csharp
+solution: Gerbil.sln
+mono:
+  - latest
+  - 3.12.0
+  - 3.10.0
+  - 3.8.0
+install:
+  - nuget restore Gerbil.sln
+build:
+  - ./scripts/build.sh
+test:
+  - ./scripts/test.sh
