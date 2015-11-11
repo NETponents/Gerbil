@@ -9,13 +9,17 @@ namespace Gerbil
 {
     namespace IO
     {
-        class Out
+        public class Out
         {
             /// <summary>
-            /// Writes a line of text to the CLI.
+            /// Writes a line of labeled text to the CLI.
             /// </summary>
             /// <param name="input">Text to write.</param>
-            public static void writeln(string input)
+            public static void writeln(string sender, string input)
+            {
+                write(String.Format("[{0}] {1}\n", sender, input));
+            }
+            public static void rawWriteln(string input)
             {
                 write(input + "\n");
             }
@@ -52,14 +56,14 @@ namespace Gerbil
             /// <param name="options">List of options to display.</param>
             public static void printMenu(string title, params string[] options)
             {
-                writeln(title);
+                rawWriteln(title);
                 for (int i = 0; i < options.Length; i++)
                 {
-                    writeln(i + " - " + options[i]);
+                    rawWriteln(i + " - " + options[i]);
                 }
             }
         }
-        class In
+        public class In
         {
             /// <summary>
             /// Prompts the user for input using a formatted graphical menu.
@@ -70,7 +74,7 @@ namespace Gerbil
             public static int menu(string title, params string[] options)
             {
                 Out.printMenu(title, options);
-                Out.writeln("-1 to cancel.");
+                Out.rawWriteln("-1 to cancel.");
                 int result = 0;
                 while (true)
                 {
@@ -79,7 +83,7 @@ namespace Gerbil
                     {
                         return result;
                     }
-                    Out.writeln("Invalid input, enter a valid menu choice.");
+                    Out.rawWriteln("Invalid input, enter a valid menu choice.");
                 }
             }
             /// <summary>
@@ -112,7 +116,7 @@ namespace Gerbil
                     }
                     catch
                     {
-                        Out.writeln("Invalid input. Please enter a valid input.");
+                        Out.rawWriteln("Invalid input. Please enter a valid input.");
                     }
                 }
             }
@@ -124,7 +128,7 @@ namespace Gerbil
             /// <returns>Action allowed.</returns>
             public static bool securePrompt(string module, string action)
             {
-                Out.writeln(String.Format("GERBIL SECURITY: Module {0} is attempting to {1}.", module, action));
+                Out.writeln("Protection Service", String.Format("Module {0} is attempting to {1}.", module, action));
                 int result = menu("Allow action?", "Yes", "No");
                 if(result == 0)
                 {

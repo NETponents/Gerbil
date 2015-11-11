@@ -79,7 +79,7 @@ namespace Gerbil
                     if(reply.Status != IPStatus.TimedOut)
                     {
                         devices.Add(subnet + i);
-                        Out.writeln("Found device: " + subnet + i);
+                        Out.writeln("Scanner", "Found device: " + subnet + i);
                     }
                 }
                 return devices.ToArray();
@@ -113,7 +113,7 @@ namespace Gerbil
                         if (!timedOut)
                         {
                             devices.Add(subnet.Replace("x", i.ToString()));
-                            IO.Out.writeln("Found device: " + subnet.Replace("x", i.ToString()));
+                            IO.Out.writeln("Scanner", "Found device: " + subnet.Replace("x", i.ToString()));
                         }
                     }
                 }

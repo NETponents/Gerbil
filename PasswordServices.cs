@@ -57,9 +57,10 @@ namespace Gerbil
             private void extendStringLength()
             {
                 passwordStorage = new char[passwordStorage.Length + 1];
+                charCtr = 31;
                 for (int i = 0; i < passwordStorage.Length; i++)
                 {
-                    passwordStorage[i] = (char)(32);
+                    passwordStorage[i] = (char)32;
                 }
             }
         }

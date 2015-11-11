@@ -83,5 +83,29 @@ namespace GerbilTest
             }
             new Gerbil.Attackers.WoLAttacker("00:00:00:00:00:00").stab();
         }
+        //[TestMethod]
+        //public void TestPasswordCracker()
+        //{
+        //    string pwd = "55";
+        //    string cpwd = "";
+        //    Gerbil.PasswordServices.SimplePasswordCracker pc = new Gerbil.PasswordServices.SimplePasswordCracker(4);
+        //    while(cpwd != pwd)
+        //    {
+        //        cpwd = pc.getNextKey();
+        //    }
+        //    Gerbil.PasswordServices.SimplePasswordCracker pc2 = new Gerbil.PasswordServices.SimplePasswordCracker(1);
+        //    bool hasFailed = false;
+        //    while(!hasFailed)
+        //    {
+        //        try
+        //        {
+        //            pc2.getNextKey();
+        //        }
+        //        catch(Gerbil.PasswordServices.PasswordTableExhaustedException e)
+        //        {
+        //            hasFailed = true;
+        //        }
+        //    }
+        //}
     }
 }

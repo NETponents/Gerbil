@@ -54,7 +54,7 @@ namespace Gerbil
                         if(training)
                         {
                             //TODO: Prompt for training input
-                            Out.writeln("Unknown input service: " + i);
+                            Out.writeln("Engine", "Unknown input service: " + i);
                         }
                         else
                         {
