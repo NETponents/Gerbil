@@ -7,7 +7,7 @@ env:
   - CFG=Release
 install:
   - nuget restore Gerbil.sln
-build:
+script:
   - xbuild /p:Configuration=$CFG /target:Gerbil Gerbil.sln
 #  - ./scripts/build.sh
 #test:
