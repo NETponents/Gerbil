@@ -11,6 +11,8 @@ namespace Gerbil
     {
         public class Out
         {
+            private static Queue<string> msgHold = new Queue<string>();
+            private static awaitingInput = false;
             /// <summary>
             /// Writes a line of labeled text to the CLI.
             /// </summary>
@@ -29,7 +31,14 @@ namespace Gerbil
             /// <param name="input">Text to write.</param>
             public static void write(string input)
             {
-                Console.Write(input);
+                if(awaitingInput)
+                {
+                    msgHold.Enqueue(input);
+                }
+                else
+                {
+                    Console.Write(input);
+                }
             }
             /// <summary>
             /// Writes a blank line to the CLI.
@@ -108,16 +117,26 @@ namespace Gerbil
                 while (true)
                 {
                     Out.write(prompt + promptKey + " ");
+                    awaitingInput = true;
                     string inval = Console.ReadLine();
                     try
                     {
                         T store = (T)Convert.ChangeType(inval, typeof(T));
+                        awaitingInput = false;
+                        emptyQueue();
                         return store;
                     }
                     catch
                     {
                         Out.rawWriteln("Invalid input. Please enter a valid input.");
                     }
+                }
+            }
+            public static void clearQueue()
+            {
+                while(msgHold.Count > 0)
+                {
+                    write(msgHold.Dequeue());
                 }
             }
             /// <summary>
