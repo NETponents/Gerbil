@@ -12,7 +12,7 @@ namespace Gerbil
         public class Out
         {
             private static Queue<string> msgHold;
-            private static awaitingInput;
+            private static bool awaitingInput;
             public static void init()
             {
                 msgHold = new Queue<string>();
