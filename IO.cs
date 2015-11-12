@@ -15,8 +15,8 @@ namespace Gerbil
             private static bool awaitingInput;
             public static void init()
             {
-                msgHold = new Queue<string>();
-                awaitingInpuut = false;
+                Out.msgHold = new Queue<string>();
+                Out.awaitingInput = false;
             }
             /// <summary>
             /// Writes a line of labeled text to the CLI.
@@ -36,9 +36,9 @@ namespace Gerbil
             /// <param name="input">Text to write.</param>
             public static void write(string input)
             {
-                if(awaitingInput)
+                if(Out.awaitingInput)
                 {
-                    msgHold.Enqueue(input);
+                    Out.msgHold.Enqueue(input);
                 }
                 else
                 {
@@ -122,18 +122,20 @@ namespace Gerbil
                 while (true)
                 {
                     Out.write(prompt + promptKey + " ");
-                    awaitingInput = true;
+                    Out.awaitingInput = true;
                     string inval = Console.ReadLine();
                     try
                     {
                         T store = (T)Convert.ChangeType(inval, typeof(T));
-                        awaitingInput = false;
-                        emptyQueue();
+                        Out.awaitingInput = false;
+                        Out.emptyQueue();
                         return store;
                     }
                     catch
                     {
+                        Out.awaitingInput = false;
                         Out.rawWriteln("Invalid input. Please enter a valid input.");
+                        Out.awaitingInput = true;
                     }
                 }
             }
@@ -141,7 +143,7 @@ namespace Gerbil
             {
                 while(msgHold.Count > 0)
                 {
-                    write(msgHold.Dequeue());
+                    write(Out.msgHold.Dequeue());
                 }
             }
             /// <summary>
