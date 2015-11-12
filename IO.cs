@@ -11,8 +11,8 @@ namespace Gerbil
     {
         public class Out
         {
-            private static Queue<string> msgHold;
-            private static bool awaitingInput;
+            public static Queue<string> msgHold;
+            public static bool awaitingInput;
             public static void init()
             {
                 Out.msgHold = new Queue<string>();
@@ -76,6 +76,13 @@ namespace Gerbil
                     rawWriteln(i + " - " + options[i]);
                 }
             }
+            public static void emptyQueue()
+            {
+                while(msgHold.Count > 0)
+                {
+                    write(Out.msgHold.Dequeue());
+                }
+            }
         }
         public class In
         {
@@ -137,13 +144,6 @@ namespace Gerbil
                         Out.rawWriteln("Invalid input. Please enter a valid input.");
                         Out.awaitingInput = true;
                     }
-                }
-            }
-            public static void clearQueue()
-            {
-                while(msgHold.Count > 0)
-                {
-                    write(Out.msgHold.Dequeue());
                 }
             }
             /// <summary>
