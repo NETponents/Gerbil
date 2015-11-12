@@ -12,6 +12,7 @@ namespace Gerbil
         /// <param name="args">Command line arguments.</param>
         static void Main(string[] args)
         {
+            Out.init();
             Out.writeln("CLI", "Gerbil v0.1.0 Alpha");
             Out.writeln("CLI", "Copyright 2015 under the GPL V3 License");
             Out.writeln("CLI", "NETponents or its authors assume no responsibility for this program or its actions.");
