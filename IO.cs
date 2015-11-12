@@ -11,8 +11,13 @@ namespace Gerbil
     {
         public class Out
         {
-            private static Queue<string> msgHold = new Queue<string>();
-            private static awaitingInput = false;
+            private static Queue<string> msgHold;
+            private static awaitingInput;
+            public static void init()
+            {
+                msgHold = new Queue<string>();
+                awaitingInpuut = false;
+            }
             /// <summary>
             /// Writes a line of labeled text to the CLI.
             /// </summary>
