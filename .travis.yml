@@ -1,0 +1,14 @@
+language: csharp
+solution: Gerbil.sln
+mono:
+  - latest
+env:
+  - CFG=Debug
+  - CFG=Release
+install:
+  - nuget restore Gerbil.sln
+script:
+  - xbuild /p:Configuration=$CFG /target:Gerbil Gerbil.sln
+#  - ./scripts/build.sh
+#test:
+#  - ./scripts/test.sh
