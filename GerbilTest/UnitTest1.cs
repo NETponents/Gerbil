@@ -2,15 +2,15 @@
 using System.IO;
 using System.Net;
 //using System.Windows.Forms;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 using Gerbil;
 
 namespace GerbilTest
 {
-    [TestClass]
+    [TestFixture]
     public class UnitTest1
     {
-        [TestMethod]
+        [Test]
         public void TestNeuralNet()
         {
             Gerbil.NeuralNetwork.Network net = new Gerbil.NeuralNetwork.Network();
@@ -22,7 +22,7 @@ namespace GerbilTest
             Assert.IsTrue(net.getResults().TryGetValue("testout", out testVal));
             Assert.IsNotNull(testVal);
         }
-        [TestMethod]
+        [Test]
         public void TestServiceInit()
         {
             Gerbil.Gerbil_PortServices.PortLookup.initServices();
@@ -34,7 +34,7 @@ namespace GerbilTest
             Gerbil.Gerbil_PortServices.PortLookup.launch("remove", "TestService", "5000");
             Assert.IsNotNull(Gerbil.Gerbil_PortServices.PortLookup.getPorts());
         }
-        [TestMethod]
+        [Test]
         public void TestDatabaseService()
         {
             Gerbil.Data.Database<int> db = new Gerbil.Data.Database<int>("Test DB");
@@ -44,7 +44,7 @@ namespace GerbilTest
             db.Update(db.getAllIDs()[0], 2);
             db.Delete(db.getAllIDs()[0]);
         }
-        [TestMethod]
+        [Test]
         public void TestScanners()
         {
             IPAddress me = IPAddress.Loopback;
@@ -56,7 +56,7 @@ namespace GerbilTest
         //{
         //    Gerbil.GerbilGui gui = new GerbilGui();
         //}
-        [TestMethod]
+        [Test]
         public void TestEngine()
         {
             string filepath = Path.Combine(Environment.ExpandEnvironmentVariables("%userprofile%"), "Documents", "Gerbil", "memstore", "OSServiceTraining.ini");
@@ -66,7 +66,7 @@ namespace GerbilTest
             Gerbil.Gerbil_Engine.GerbilRunner.guessOS(services, false);
             Gerbil.Gerbil_Engine.GerbilRunner.guessHTTPService();
         }
-        [TestMethod]
+        [Test]
         public void TestAttackers()
         {
             Gerbil.Attackers.Attacker a = new Gerbil.Attackers.Attacker();
@@ -83,7 +83,7 @@ namespace GerbilTest
             }
             new Gerbil.Attackers.WoLAttacker("00:00:00:00:00:00").stab();
         }
-        //[TestMethod]
+        //[Test]
         //public void TestPasswordCracker()
         //{
         //    string pwd = "55";
