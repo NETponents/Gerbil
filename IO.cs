@@ -11,6 +11,13 @@ namespace Gerbil
     {
         public class Out
         {
+            public static Queue<string> msgHold;
+            public static bool awaitingInput;
+            public static void init()
+            {
+                Out.msgHold = new Queue<string>();
+                Out.awaitingInput = false;
+            }
             /// <summary>
             /// Writes a line of labeled text to the CLI.
             /// </summary>
@@ -29,7 +36,14 @@ namespace Gerbil
             /// <param name="input">Text to write.</param>
             public static void write(string input)
             {
-                Console.Write(input);
+                if(Out.awaitingInput)
+                {
+                    Out.msgHold.Enqueue(input);
+                }
+                else
+                {
+                    Console.Write(input);
+                }
             }
             /// <summary>
             /// Writes a blank line to the CLI.
@@ -60,6 +74,13 @@ namespace Gerbil
                 for (int i = 0; i < options.Length; i++)
                 {
                     rawWriteln(i + " - " + options[i]);
+                }
+            }
+            public static void emptyQueue()
+            {
+                while(msgHold.Count > 0)
+                {
+                    write(Out.msgHold.Dequeue());
                 }
             }
         }
@@ -108,15 +129,20 @@ namespace Gerbil
                 while (true)
                 {
                     Out.write(prompt + promptKey + " ");
+                    Out.awaitingInput = true;
                     string inval = Console.ReadLine();
                     try
                     {
                         T store = (T)Convert.ChangeType(inval, typeof(T));
+                        Out.awaitingInput = false;
+                        Out.emptyQueue();
                         return store;
                     }
                     catch
                     {
+                        Out.awaitingInput = false;
                         Out.rawWriteln("Invalid input. Please enter a valid input.");
+                        Out.awaitingInput = true;
                     }
                 }
             }
