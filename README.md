@@ -18,6 +18,20 @@ Gerbil is still in it's early stages. Right now it's just a fancy network scanne
 
 [Read more >](http://github.com/NETponents/Gerbil/wiki/Project-State)
 
+
+## Build Status
+
+| Configuration | Branch | Status |
+|---------------|--------|--------|
+| Windows x86/64 (.NET 4.5) | stable | [![Build status](https://ci.appveyor.com/api/projects/status/3v9lq10jpng3i8ag/branch/stable?retina=true)](https://ci.appveyor.com/project/ARMmaster17/gerbil) |
+|  | beta | [![Build status](https://ci.appveyor.com/api/projects/status/3v9lq10jpng3i8ag/branch/beta?retina=true)](https://ci.appveyor.com/project/ARMmaster17/gerbil) |
+|  | nightly | [![Build status](https://ci.appveyor.com/api/projects/status/3v9lq10jpng3i8ag/branch/nightly?retina=true)](https://ci.appveyor.com/project/ARMmaster17/gerbil) |
+|  | dev | [![Build status](https://ci.appveyor.com/api/projects/status/3v9lq10jpng3i8ag/branch/dev?retina=true)](https://ci.appveyor.com/project/ARMmaster17/gerbil) |
+| Linux x64 (Mono 3.12.0) | stable | [![Build Status](https://travis-ci.org/NETponents/Gerbil.svg?branch=stable)](https://travis-ci.org/NETponents/Gerbil) |
+|  | beta | [![Build Status](https://travis-ci.org/NETponents/Gerbil.svg?branch=beta)](https://travis-ci.org/NETponents/Gerbil) |
+|  | nightly | [![Build Status](https://travis-ci.org/NETponents/Gerbil.svg?branch=nightly)](https://travis-ci.org/NETponents/Gerbil) |
+|  | dev | [![Build Status](https://travis-ci.org/NETponents/Gerbil.svg?branch=dev)](https://travis-ci.org/NETponents/Gerbil) |
+
 ## System requirements
 Doesn't matter if you have a Cray supercomputer or a potato. If it can run .NET 4.5, you are good to go.
 
