@@ -94,6 +94,10 @@ namespace Gerbil
             /// <returns>Zero-indexed choice selected by user. (-1 if none)</returns>
             public static int menu(string title, params string[] options)
             {
+                while(Out.awaitingInput)
+                {
+                    // Wait for IO channels to clear up.
+                }
                 Out.printMenu(title, options);
                 Out.rawWriteln("-1 to cancel.");
                 int result = 0;
@@ -128,6 +132,10 @@ namespace Gerbil
             {
                 while (true)
                 {
+                    while(Out.awaitingInput)
+                    {
+                        // Wait for IO channels to clear up
+                    }
                     Out.write(prompt + promptKey + " ");
                     Out.awaitingInput = true;
                     string inval = Console.ReadLine();
@@ -154,6 +162,10 @@ namespace Gerbil
             /// <returns>Action allowed.</returns>
             public static bool securePrompt(string module, string action)
             {
+                while(Out.awaitingInput)
+                {
+                    // Wait for output channels to clear up
+                }
                 Out.writeln("Protection Service", String.Format("Module {0} is attempting to {1}.", module, action));
                 int result = menu("Allow action?", "Yes", "No");
                 if(result == 0)

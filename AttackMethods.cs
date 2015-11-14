@@ -115,9 +115,22 @@ namespace Gerbil
             }
             
             // Loop system scan on all responding systems
+            List<Task> tList = new List<Task>();
+            bool finished = false;
             foreach(string address in deviceDB.getAllIDs())
             {
-                Task.Factory.StartNew(() => attackDeviceAuto(ref deviceDB, address, timeout));
+                tList.Add(Task.Factory.StartNew(() => attackDeviceAuto(ref deviceDB, address, timeout)));
+            }
+            while(!finished)
+            {
+                finished = true;
+                foreach(Task i in tList)
+                {
+                    if(!i.IsCompleted)
+                    {
+                        finished = false;
+                    }
+                }
             }
         }
         private static void attackDeviceAuto(ref Database<Data.Models.Devices.Device> DBref, string devID, int pingTimeout)
@@ -188,7 +201,7 @@ namespace Gerbil
                     Gerbil.Attackers.HTTPAuthAttacker HAA = new Attackers.HTTPAuthAttacker(address, pLength);
                     while (true)
                     {
-                        Out.write("*");
+                        Out.writeln("PasswordService", "*");
                         Gerbil.Attackers.AttackerResult AR;
                         try
                         {

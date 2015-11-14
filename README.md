@@ -1,8 +1,6 @@
 # Gerbil
 [![Join the chat at https://gitter.im/NETponents/Gerbil](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/NETponents/Gerbil?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
-[![Build status](https://ci.appveyor.com/api/projects/status/3v9lq10jpng3i8ag?svg=true)](https://ci.appveyor.com/project/ARMmaster17/gerbil)
-[![Build Status](https://travis-ci.org/NETponents/Gerbil.svg)](https://travis-ci.org/NETponents/Gerbil)
-[![codecov.io](https://codecov.io/github/NETponents/Gerbil/coverage.svg?branch=dev)](https://codecov.io/github/NETponents/Gerbil?branch=dev)
+[![codecov.io](https://codecov.io/github/NETponents/Gerbil/coverage.svg?branch=beta)](https://codecov.io/github/NETponents/Gerbil?branch=dev)
 [![overv.io](https://img.shields.io/badge/overv.io-active-blue.svg)](https://overv.io/workspace/ARMmaster17/perfect-chimpanzee/)
 [![Issue Stats](http://issuestats.com/github/NETponents/Gerbil/badge/pr?style=flat)](http://issuestats.com/github/NETponents/Gerbil)
 [![Issue Stats](http://issuestats.com/github/NETponents/Gerbil/badge/issue?style=flat)](http://issuestats.com/github/NETponents/Gerbil)
@@ -17,6 +15,20 @@ Gerbil is an automated hacking tool powered by a trainable AI engine. It was ori
 Gerbil is still in it's early stages. Right now it's just a fancy network scanner. If you have experience in C#, feel free to contribute to help speed up development!
 
 [Read more >](http://github.com/NETponents/Gerbil/wiki/Project-State)
+
+
+## Build Status
+
+| Configuration | Branch | Status |
+|---------------|--------|--------|
+| Windows x86/64 (.NET 4.5) | stable | [![Build status](https://ci.appveyor.com/api/projects/status/3v9lq10jpng3i8ag/branch/stable?retina=true)](https://ci.appveyor.com/project/ARMmaster17/gerbil) |
+|  | beta | [![Build status](https://ci.appveyor.com/api/projects/status/3v9lq10jpng3i8ag/branch/beta?retina=true)](https://ci.appveyor.com/project/ARMmaster17/gerbil) |
+|  | nightly | [![Build status](https://ci.appveyor.com/api/projects/status/3v9lq10jpng3i8ag/branch/nightly?retina=true)](https://ci.appveyor.com/project/ARMmaster17/gerbil) |
+|  | dev | [![Build status](https://ci.appveyor.com/api/projects/status/3v9lq10jpng3i8ag/branch/dev?retina=true)](https://ci.appveyor.com/project/ARMmaster17/gerbil) |
+| Linux x64 (Mono 3.12.0) | stable | [![Build Status](https://travis-ci.org/NETponents/Gerbil.svg?branch=stable)](https://travis-ci.org/NETponents/Gerbil) |
+|  | beta | [![Build Status](https://travis-ci.org/NETponents/Gerbil.svg?branch=beta)](https://travis-ci.org/NETponents/Gerbil) |
+|  | nightly | [![Build Status](https://travis-ci.org/NETponents/Gerbil.svg?branch=nightly)](https://travis-ci.org/NETponents/Gerbil) |
+|  | dev | [![Build Status](https://travis-ci.org/NETponents/Gerbil.svg?branch=dev)](https://travis-ci.org/NETponents/Gerbil) |
 
 ## System requirements
 Doesn't matter if you have a Cray supercomputer or a potato. If it can run .NET 4.5, you are good to go.
