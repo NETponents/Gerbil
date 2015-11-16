@@ -3,37 +3,36 @@
   <head>
     <meta charset='utf-8'>
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
-
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link href='https://fonts.googleapis.com/css?family=Architects+Daughter' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
-    <link rel="stylesheet" type="text/css" href="stylesheets/github-dark.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
     <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print">
+
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
 
     <title>Gerbil by NETponents</title>
   </head>
 
   <body>
-
     <header>
-      <div class="container">
+      <div class="inner">
         <h1>Gerbil</h1>
         <h2>Automated hacking tool powered by a trainable AI engine.</h2>
-
-        <section id="downloads">
-          <a href="https://github.com/NETponents/Gerbil/zipball/master" class="btn">Download as .zip</a>
-          <a href="https://github.com/NETponents/Gerbil/tarball/master" class="btn">Download as .tar.gz</a>
-          <a href="https://github.com/NETponents/Gerbil" class="btn btn-github"><span class="icon"></span>View on GitHub</a>
-        </section>
+        <a href="https://github.com/NETponents/Gerbil" class="button"><small>View project on</small> GitHub</a>
       </div>
     </header>
 
-    <div class="container">
-      <section id="main_content">
-        <h1>
+    <div id="content-wrapper">
+      <div class="inner clearfix">
+        <section id="main-content">
+          <h1>
 <a id="gerbil" class="anchor" href="#gerbil" aria-hidden="true"><span class="octicon octicon-link"></span></a>Gerbil</h1>
 
 <p><a href="https://gitter.im/NETponents/Gerbil?utm_source=badge&amp;utm_medium=badge&amp;utm_campaign=pr-badge&amp;utm_content=badge"><img src="https://badges.gitter.im/Join%20Chat.svg" alt="Join the chat at https://gitter.im/NETponents/Gerbil"></a>
-<a href="https://ci.appveyor.com/project/ARMmaster17/gerbil"><img src="https://ci.appveyor.com/api/projects/status/3v9lq10jpng3i8ag?svg=true" alt="Build status"></a>
-<a href="https://codecov.io/github/NETponents/Gerbil?branch=dev"><img src="https://codecov.io/github/NETponents/Gerbil/coverage.svg?branch=dev" alt="codecov.io"></a>
+<a href="https://codecov.io/github/NETponents/Gerbil?branch=dev"><img src="https://codecov.io/github/NETponents/Gerbil/coverage.svg?branch=beta" alt="codecov.io"></a>
 <a href="https://overv.io/workspace/ARMmaster17/perfect-chimpanzee/"><img src="https://img.shields.io/badge/overv.io-active-blue.svg" alt="overv.io"></a>
 <a href="http://issuestats.com/github/NETponents/Gerbil"><img src="http://issuestats.com/github/NETponents/Gerbil/badge/pr?style=flat" alt="Issue Stats"></a>
 <a href="http://issuestats.com/github/NETponents/Gerbil"><img src="http://issuestats.com/github/NETponents/Gerbil/badge/issue?style=flat" alt="Issue Stats"></a>
@@ -52,6 +51,61 @@
 <p>Gerbil is still in it's early stages. Right now it's just a fancy network scanner. If you have experience in C#, feel free to contribute to help speed up development!</p>
 
 <p><a href="http://github.com/NETponents/Gerbil/wiki/Project-State">Read more &gt;</a></p>
+
+<h2>
+<a id="build-status" class="anchor" href="#build-status" aria-hidden="true"><span class="octicon octicon-link"></span></a>Build Status</h2>
+
+<table>
+<thead>
+<tr>
+<th>Configuration</th>
+<th>Branch</th>
+<th>Status</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Windows x86/64 (.NET 4.5)</td>
+<td>stable</td>
+<td><a href="https://ci.appveyor.com/project/ARMmaster17/gerbil"><img src="https://ci.appveyor.com/api/projects/status/3v9lq10jpng3i8ag/branch/stable?retina=true" alt="Build status"></a></td>
+</tr>
+<tr>
+<td></td>
+<td>beta</td>
+<td><a href="https://ci.appveyor.com/project/ARMmaster17/gerbil"><img src="https://ci.appveyor.com/api/projects/status/3v9lq10jpng3i8ag/branch/beta?retina=true" alt="Build status"></a></td>
+</tr>
+<tr>
+<td></td>
+<td>nightly</td>
+<td><a href="https://ci.appveyor.com/project/ARMmaster17/gerbil"><img src="https://ci.appveyor.com/api/projects/status/3v9lq10jpng3i8ag/branch/nightly?retina=true" alt="Build status"></a></td>
+</tr>
+<tr>
+<td></td>
+<td>dev</td>
+<td><a href="https://ci.appveyor.com/project/ARMmaster17/gerbil"><img src="https://ci.appveyor.com/api/projects/status/3v9lq10jpng3i8ag/branch/dev?retina=true" alt="Build status"></a></td>
+</tr>
+<tr>
+<td>Linux x64 (Mono 3.12.0)</td>
+<td>stable</td>
+<td><a href="https://travis-ci.org/NETponents/Gerbil"><img src="https://travis-ci.org/NETponents/Gerbil.svg?branch=stable" alt="Build Status"></a></td>
+</tr>
+<tr>
+<td></td>
+<td>beta</td>
+<td><a href="https://travis-ci.org/NETponents/Gerbil"><img src="https://travis-ci.org/NETponents/Gerbil.svg?branch=beta" alt="Build Status"></a></td>
+</tr>
+<tr>
+<td></td>
+<td>nightly</td>
+<td><a href="https://travis-ci.org/NETponents/Gerbil"><img src="https://travis-ci.org/NETponents/Gerbil.svg?branch=nightly" alt="Build Status"></a></td>
+</tr>
+<tr>
+<td></td>
+<td>dev</td>
+<td><a href="https://travis-ci.org/NETponents/Gerbil"><img src="https://travis-ci.org/NETponents/Gerbil.svg?branch=dev" alt="Build Status"></a></td>
+</tr>
+</tbody>
+</table>
 
 <h2>
 <a id="system-requirements" class="anchor" href="#system-requirements" aria-hidden="true"><span class="octicon octicon-link"></span></a>System requirements</h2>
@@ -95,9 +149,25 @@
 <p>Since this is technically a "hacking tool", NETponents, <a href="https://github.com/ARMmaster17" class="user-mention">@ARMmaster17</a>, or any other contributers cannot be held liable for actions taken by this software on either your own or someone elses network. We reccommend testing Gerbil on a protected private lab network since Gerbil does posses tools to potentially wipe/modify network computer hard disks.</p>
 
 <p><a href="http://github.com/NETponents/Gerbil/wiki/Legal-Disclaimer">Read more &gt;</a></p>
-      </section>
+        </section>
+
+        <aside id="sidebar">
+          <a href="https://github.com/NETponents/Gerbil/zipball/master" class="button">
+            <small>Download</small>
+            .zip file
+          </a>
+          <a href="https://github.com/NETponents/Gerbil/tarball/master" class="button">
+            <small>Download</small>
+            .tar.gz file
+          </a>
+
+          <p class="repo-owner"><a href="https://github.com/NETponents/Gerbil"></a> is maintained by <a href="https://github.com/NETponents">NETponents</a>.</p>
+
+          <p>This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the Architect theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.</p>
+        </aside>
+      </div>
     </div>
 
-    
+  
   </body>
 </html>
