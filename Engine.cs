@@ -58,7 +58,7 @@ namespace Gerbil
                         }
                         else
                         {
-                            throw e;
+                            Out.writeln("Engine", "Unknown input service: " + i);
                         }
                     }
                     catch
