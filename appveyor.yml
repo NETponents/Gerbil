@@ -1,158 +1,41 @@
-# Notes:
-#   - Minimal appveyor.yml file is an empty file. All sections are optional.
-#   - Indent each level of configuration with 2 spaces. Do not use tabs!
-#   - All section names are case-sensitive.
-#   - Section names should be unique on each level.
-
-#---------------------------------#
-#      general configuration      #
-#---------------------------------#
-
-# version format
-# version: 1.0.{build}
-
-# you can use {branch} name in version format too
 version: 0.1.{build}-{branch}
-
-# branches to build
 branches:
-  # whitelist
   only:
     - stable
     - beta
     - nightly
     - dev
-
-# Do not build on tags (GitHub only)
-skip_tags: true
-
-#---------------------------------#
-#    environment configuration    #
-#---------------------------------#
-
-# Operating system (build VM template)
+skip_tags: false
 os: Windows Server 2012
-
-# scripts that are called at very beginning, before repo cloning
 init:
   - git config --global core.autocrlf input
-
-# clone directory
 clone_folder: c:\projects\myproject
-
 # fetch repository as zip archive
 shallow_clone: true                 # default is "false"
-
-# set clone depth
 clone_depth: 5                      # clone entire repository history if not defined
-
-# environment:
-#  global:
-#    connection_string: server=12;password=13;
-#    service_url: https://127.0.0.1:8090
-#
-#  matrix:
-#  - db: mysql
-#    provider: mysql
-#
-#  - db: mssql
-#    provider: mssql
-#    password:
-#      secure: $#(JFDA)jQ@#$
-
-# Automatically register private account and/or project AppVeyor NuGet feeds.
 nuget:
   account_feed: true
   project_feed: true
   disable_publish_on_pr: true     # disable publishing of .nupkg artifacts to
-                                  # account/project feeds for pull request builds
-
-#---------------------------------#
-#       build configuration       #
-#---------------------------------#
-
-# build platform, i.e. x86, x64, Any CPU. This setting is optional.
-#platform: Any CPU
-
-# to add several platforms to build matrix:
-platform:
-  - Any CPU
-
-# build Configuration, i.e. Debug, Release, etc.
-#configuration: Release
-
-# to add several configurations to build matrix:
+platform: Any CPU
+#platform:
+#  - x86
+#  - x64
 configuration:
   - Debug
   - Release
-
 before_build:
   - nuget restore
-
 build:
   parallel: true                  # enable MSBuild parallel builds
   project: Gerbil.sln      # path to Visual Studio solution or project
-
-  # MSBuild verbosity level
   verbosity: normal
-
-# to disable automatic builds
-#build: off
-
-#---------------------------------#
-#       tests configuration       #
-#---------------------------------#
-
-#test:
-#  assemblies:
-#    - asm1.dll
-#    - asm2.dll
-
-#  categories:
-#    - UI
-#    - E2E
-
-# to run tests from different categories as separate jobs in parallel
-#test:
-#  categories:
-#    - A            # A category common for all jobs
-#    - [UI]         # 1st job
-#    - [DAL, BL]    # 2nd job
-
-# scripts to run before tests
-#before_test:
-#  - echo script1
-#  - ps: Write-Host "script1"
-
-# scripts to run after tests
 after_test: 
-    - .\packages\OpenCover.4.6.166\tools\OpenCover.Console.exe -register:user -target:"C:\Program Files (x86)\Microsoft Visual Studio 12.0\Common7\IDE\MSTest.exe" -targetargs:"/noresults /noisolation /testcontainer:"".\GerbilTest\bin\Debug\GerbilTest.dll" -filter:"" -excludebyattribute:*.ExcludeFromCodeCoverage* -hideskipped:All -output:.\MyProject_coverage.xml
+    - .\packages\OpenCover.4.6.166\tools\OpenCover.Console.exe -register:user -target:"C:\projects\myproject\packages\NUnit.Runners.2.6.4\tools\nunit-console.exe" -targetargs:"C:\projects\myproject\GerbilTest\bin\%CONFIGURATION%\GerbilTest.dll /noshadow" -filter:"" -excludebyattribute:*.ExcludeFromCodeCoverage* -hideskipped:All -output:.\MyProject_coverage.xml
     - "SET PATH=C:\\Python34;C:\\Python34\\Scripts;%PATH%"
     - pip install codecov
     - codecov -f "MyProject_coverage.xml" -t "43fa8e8a-43eb-4e4c-a63e-6d4602b1263f"
 #    - codecov
-# to run your custom scripts instead of automatic tests
-#test_script:
-
-# to disable automatic tests 
-#test: off
-
-
-#---------------------------------#
-#      artifacts configuration    #
-#---------------------------------#
-
-#artifacts:
-#
-#  # pushing a single file
-#  - path: bin
-
-#---------------------------------#
-#     deployment configuration    #
-#---------------------------------#
-
-# providers: Local, FTP, WebDeploy, AzureCS, AzureBlob, S3, NuGet, Environment
-# provider names are case-sensitive!
 deploy:
 
     # Deploy to GitHub Releases

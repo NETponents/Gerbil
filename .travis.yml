@@ -7,8 +7,9 @@ env:
   - CFG=Release
 install:
   - nuget restore Gerbil.sln
+  - nuget install NUnit.Runners -Version 2.6.4 -OutputDirectory testrunner
 script:
-  - xbuild /p:Configuration=$CFG /target:Gerbil Gerbil.sln
+  - xbuild /p:Configuration=$CFG Gerbil.sln
 #  - ./scripts/build.sh
-#test:
+  - mono ./testrunner/NUnit.Runners.*/tools/nunit-console.exe ./GerbilTest/bin/$CFG/GerbilTest.dll
 #  - ./scripts/test.sh
