@@ -61,6 +61,9 @@ namespace Gerbil
                 case "start":
                     startAttack();
                     break;
+                case "invoke":
+                    // TODO: launch attack method
+                    break;
                 case "help":
                     Out.writeln("Help", "Common Gerbil CLI commands:");
                     Out.writeln("Help", "'start' - Switch program from CLI to attack mode.");
