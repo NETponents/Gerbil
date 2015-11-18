@@ -26,6 +26,10 @@ namespace Gerbil
             {
                 write(String.Format("[{0}] {1}\n", sender, input));
             }
+			/// <summary>
+			/// Writes a line of text directly to the screen.
+			/// </summary>
+			/// <param name="input">Input string to write.</param>
             public static void rawWriteln(string input)
             {
                 write(input + "\n");
