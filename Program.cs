@@ -86,6 +86,58 @@ namespace Gerbil
                     break;
             }
         }
+		/// <summary>
+		/// Manually starts a specific attack on a given target
+		/// </summary>
+		/// <param name="attackName">Name of attack method.</param>
+		private static void manualAttack()
+		{
+			int attackType = In.menu("Attack methods", "HTTPAuthCracker", "Wake on Lan");
+			string address = In.prompt<string>("IP address of target");
+			int pLength = In.prompt<int>("Max length of password");
+			switch (attackType)
+			{
+				case 0:
+					Gerbil.Attackers.HTTPAuthAttacker HAA = new Attackers.HTTPAuthAttacker(address, pLength);
+					while (true)
+					{
+						Out.writeln("PasswordService", "*");
+						Gerbil.Attackers.AttackerResult AR;
+						try
+						{
+							AR = HAA.stab();
+						}
+						catch
+						{
+							// Error occured, break.
+							break;
+						}
+						if (AR == Attackers.AttackerResult.Trying)
+						{
+							// Continue
+						}
+						else if (AR == Attackers.AttackerResult.FailedAuth || AR == Attackers.AttackerResult.FailedConnection)
+						{
+							Out.blank();
+							Out.writeln("Scanner(0)", "Failed to crack password using given parameters.");
+							break;
+						}
+						else if (AR == Attackers.AttackerResult.Connected)
+						{
+							Out.blank();
+							Out.writeln("Scanner(0)", String.Format("CRACKED: Password is \"{0}\".", HAA.getAccessString()));
+							break;
+						}
+					}	
+					break;
+				case 1:
+					string macaddress = In.prompt<string>("Device MAC address");
+					Gerbil.Attackers.WoLAttacker WAA = new Gerbil.Attackers.WoLAttacker(macaddress);
+					WAA.init();
+					WAA.stab();
+					break;
+			}
+		}
         /// <summary>
         /// Launches wizard that retrieves attack options, then launches appropriate attack mode.
         /// </summary>
