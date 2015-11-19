@@ -21,6 +21,8 @@ platform: Any CPU
 #platform:
 #  - x86
 #  - x64
+cache:
+  - packages -> **\packages.config
 configuration:
   - Debug
   - Release
