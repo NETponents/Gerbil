@@ -132,6 +132,12 @@ namespace Gerbil
                     }
                 }
             }
+            // Prompt for final report
+            if(In.prompt<int>("Save report? (1=>Y/0=>N)") > 0)
+            {
+                string filepath = In.prompt<string>("Directory to save to");
+                Reporting.Reporter.GenerateResults(filepath, deviceDB);
+            }
         }
         private static void attackDeviceAuto(ref Database<Data.Models.Devices.Device> DBref, string devID, int pingTimeout)
         {
@@ -148,6 +154,9 @@ namespace Gerbil
                 {
                     tempFoundPorts.Add(i);
                     Out.writeln("Scanner(" + devID + ")", i + ": OPEN");
+                    Data.Models.Devices.Device writeholder = DBref.Read(devID);
+                    writeholder.addPort(i);
+                    DBref.Update(devID, writeholder);
                 }
                 else
                 {
@@ -181,6 +190,9 @@ namespace Gerbil
                 string devName = "";
                 devName = Dns.GetHostEntry(address).HostName;
                 Out.writeln("Scanner(" + devID + ")", "NETBIOS Name: " + devName);
+                Data.Models.Devices.Device deviceHolder = DBref.Read(devID);
+                deviceHolder.setDeviceNetworkName(devName);
+                DBref.Update(devID, deviceHolder);
             }
             // Forward found services to the AI engine and get server OS
             //TODO: forward training mode parameter

@@ -21,6 +21,7 @@ namespace Gerbil
                     private SecurityLevel machineSecurityRel;
                     private string networkName;
                     private IPAddress deviceAddress;
+                    protected List<int> openPorts;
                     protected Dictionary<string, string> properties;
 
                     public Device(IPAddress dAddr)
@@ -29,6 +30,7 @@ namespace Gerbil
                         networkName = "";
                         machineSecurityRel = SecurityLevel.Undetermined;
                         properties = new Dictionary<string, string>();
+                        openPorts = new List<int>();
                     }
                     public Device(IPAddress dAddr, string mName)
                     {
@@ -36,6 +38,7 @@ namespace Gerbil
                         networkName = mName;
                         machineSecurityRel = SecurityLevel.Undetermined;
                         properties = new Dictionary<string, string>();
+                        openPorts = new List<int>();
                     }
                     public Device(IPAddress dAddr, string mName, SecurityLevel secState)
                     {
@@ -43,6 +46,7 @@ namespace Gerbil
                         networkName = mName;
                         machineSecurityRel = secState;
                         properties = new Dictionary<string, string>();
+                        openPorts = new List<int>();
                     }
                     public IPAddress getDeviceIPAddress()
                     {
@@ -52,6 +56,10 @@ namespace Gerbil
                     {
                         return networkName;
                     }
+                    public void setDeviceNetworkName(string netName)
+                    {
+                        networkName = netName;
+                    }
                     public SecurityLevel getDeviceSecurityLevel()
                     {
                         return machineSecurityRel;
@@ -59,6 +67,14 @@ namespace Gerbil
                     public void setDeviceSecurityLevel(SecurityLevel sl)
                     {
                         machineSecurityRel = sl;
+                    }
+                    public void addPort(int portNumber)
+                    {
+                        openPorts.Add(portNumber);
+                    }
+                    public List<int> getPorts()
+                    {
+                        return openPorts;
                     }
                 }
                 /// <summary>

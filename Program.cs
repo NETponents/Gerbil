@@ -62,7 +62,7 @@ namespace Gerbil
                     startAttack();
                     break;
                 case "invoke":
-                    // TODO: launch attack method
+                    manualAttack();
                     break;
                 case "help":
                     Out.writeln("Help", "Common Gerbil CLI commands:");
