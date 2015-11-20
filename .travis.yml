@@ -5,6 +5,12 @@ mono:
 env:
   - CFG=Debug
   - CFG=Release
+branches:
+  only:
+    - stable
+    - beta
+    - nightly
+    - dev
 install:
   - nuget restore Gerbil.sln
   - nuget install NUnit.Runners -Version 2.6.4 -OutputDirectory testrunner
