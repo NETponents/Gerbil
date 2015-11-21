@@ -53,6 +53,7 @@
     <Compile Include="GerbilGui.Designer.cs">
       <DependentUpon>GerbilGui.cs</DependentUpon>
     </Compile>
+    <Compile Include="HTMLitems.cs" />
     <Compile Include="IO.cs" />
     <Compile Include="PasswordServices.cs" />
     <Compile Include="Ringleaders.cs" />
