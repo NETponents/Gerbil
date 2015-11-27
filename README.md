@@ -1,4 +1,3 @@
-# Gerbil
 [![Join the chat at https://gitter.im/NETponents/Gerbil](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/NETponents/Gerbil?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 [![codecov.io](https://codecov.io/github/NETponents/Gerbil/coverage.svg?branch=beta)](https://codecov.io/github/NETponents/Gerbil?branch=dev)
 [![overv.io](https://img.shields.io/badge/overv.io-active-blue.svg)](https://overv.io/workspace/ARMmaster17/perfect-chimpanzee/)
