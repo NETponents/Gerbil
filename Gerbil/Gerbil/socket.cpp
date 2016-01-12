@@ -26,7 +26,7 @@ namespace TD
 
 	Socket::Socket(int type, int domain, int protocol)
 	{
-#ifdef WIN32 // Brain fuc*	
+#ifdef WIN32
 		int n = WSAStartup(MAKEWORD(2, 0), &wsa_data);
 		if (n == -1) error(n);
 #endif

@@ -1,8 +1,7 @@
 // Gerbil.cpp : Defines the entry point for the console application.
 //
 
-#include <iostream>
-#include <tchar.h>
+#include "stdafx.h"
 
 // Entry point of the program
 int _tmain(int argc, _TCHAR* argv[])
